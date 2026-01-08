@@ -60,7 +60,7 @@ const HeroSection = () => {
           transition={{ delay: 0.4 }}
         >
           <a
-            href="/portfolio"
+            href="/work"
             className="px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-all duration-300 text-lg shadow-lg hover:shadow-xl"
           >
             View My Work →
