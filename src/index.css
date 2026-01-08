@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------- */
+/*  New Minimal Techy Variables        */
+/* ----------------------------------- */
+
+:root {
+  --color-bg: #FAFAFA;           /* Clean light background */
+  --color-text: #1A1A1A;         /* Deep gray text */
+  --color-nav: #FFFFFF;          /* White navigation */
+  --color-primary: #2563EB;      /* Clean tech blue */
+  --color-accent: #3B82F6;       /* Accent blue */
+  --color-border: #E5E5E5;       /* Subtle borders */
+  --color-muted: #71717A;        /* Muted text */
+}
+
+.dark-theme {
+  --color-bg: #0F172A;           /* Dark navy blue background */
+  --color-text: #F8FAFC;         /* Light text */
+  --color-nav: #1E293B;          /* Dark navigation */
+  --color-primary: #60A5FA;      /* Light blue accent */
+  --color-accent: #3B82F6;       /* Accent blue */
+  --color-border: #334155;       /* Dark borders */
+  --color-muted: #CBD5E1;        /* Muted light text */
+}
+
+/* ----------------------------------- */
+/*  Base Styles                        */
+/* ----------------------------------- */
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* Links */
+a {
+  color: var(--color-primary);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+/* Focus styles */
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ----------------------------------- */
+/*  Custom Components                  */
+/* ----------------------------------- */
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-gray-200/50;
+  }
+  
+  .dark .glass-card {
+    @apply bg-gray-900/50 backdrop-blur-sm border-gray-700/50;
+  }
+  
+  .subtle-hover {
+    @apply transition-all duration-200 hover:scale-[1.02] hover:shadow-md;
+  }
+  
+  .tech-border {
+    @apply border border-gray-200;
+  }
+  
+  .dark .tech-border {
+    @apply border-gray-700;
+  }
+}

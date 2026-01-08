@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- Core Meta -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="GlimmerInk Creations — premium digital design, poster art, and creative identity work crafted for modern brands." />
+    <meta name="keywords" content="GlimmerInk, design, branding, posters, UI, UX, digital art, creative studio, Kenya" />
+    <meta name="author" content="Ehud Mwai - GlimmerInk Creations" />
+    <meta name="theme-color" content="#6B46C1" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://glimmerink.netlify.app" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="mask-icon" href="/favicon_io/safari-pinned-tab.svg" color="#6B46C1" />
+    <link rel="shortcut icon" href="/favicon.svg" />
+
+    <!-- Open Graph & Twitter -->
+    <meta property="og:title" content="GlimmerInk Creations — Where Ink Meets Imagination" />
+    <meta property="og:description" content="Premium poster design, digital experiences, and brand identity work from Kenya to the world." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://glimmerink.netlify.app" />
+    <meta property="og:image" content="/images/Glimmer-OG.jpg" />
+    <meta property="og:site_name" content="GlimmerInk Creations" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GlimmerInk Creations — Creative Studio" />
+    <meta name="twitter:description" content="Designs that ink your imagination." />
+    <meta name="twitter:image" content="/images/Glimmer-OG.jpg" />
+    <meta name="twitter:site" content="@GlimmerInk_" />
+
+    <!-- Security & Performance -->
+   <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 
+    'self' 
+    https://cdn.jsdelivr.net 
+    https://api.emailjs.com 
+    'unsafe-inline' 
+    https://www.googletagmanager.com 
+    https://www.google-analytics.com;
+  style-src 
+    'self' 
+    'unsafe-inline' 
+    https://fonts.googleapis.com 
+    https://cdnjs.cloudflare.com;
+  font-src 
+    'self' 
+    https://fonts.gstatic.com 
+    https://cdnjs.cloudflare.com;
+ img-src 
+  'self'
+  data:
+  blob:
+  https://glimmerink.netlify.app
+  https://cdn.jsdelivr.net
+  https://www.google-analytics.com;
+
+  connect-src 
+    'self' 
+    https://api.emailjs.com 
+    https://www.google-analytics.com 
+    https://region1.google-analytics.com;
+  upgrade-insecure-requests;
+">
+
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "GlimmerInk Creations",
+      "url": "https://glimmerink.netlify.app",
+      "logo": "https://glimmerink.netlify.app/favicon_io/android-chrome-512x512.png",
+      "sameAs": [
+        "https://twitter.com/GlimmerInk_",
+        "https://www.instagram.com/glimmerink.creations",
+        "https://www.linkedin.com/company/glimmerink"
+      ],
+      "description": "GlimmerInk Creations provides premium design services, specializing in posters, brand identities, and digital experiences.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "nyamuehud@gmail.com",
+        "contactType": "Customer Service"
+      }
+    }
+    </script>
+
+    <title>GlimmerInk Creations</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7F9GC4PTFB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7F9GC4PTFB');
+    </script>
+
+    <!-- PWA: Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registered:', reg))
+            .catch(err => console.error('Service Worker registration failed:', err));
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="root" role="main"></div>
+
+    <!-- No-JS Fallback -->
+    <noscript>
+      <style>
+        body { font-family: 'Inter', 'Space Grotesk', sans-serif; background: #f9f9fb; color: #1a1a1a; display:flex; align-items:center; justify-content:center; height:100vh; text-align:center; margin:0; padding:0 1.5rem; }
+        .noscript-container { max-width:480px; }
+        .noscript-container h1 { font-size:1.75rem; color:#6B46C1; margin-bottom:1rem; letter-spacing:0.5px; }
+        .noscript-container p { font-size:1rem; line-height:1.6; color:#333; }
+        .noscript-container a { color:#6B46C1; font-weight:600; text-decoration:none; border-bottom:1px solid #6B46C1; }
+        .noscript-container a:hover { opacity:0.8; }
+      </style>
+      <div class="noscript-container">
+        <h1>⚡ GlimmerInk Creations</h1>
+        <p>
+          Our digital canvas runs on JavaScript.<br/>
+          Please enable it to experience the full magic — or visit our
+          <a href="/static">static portfolio</a> instead.
+        </p>
+      </div>
+    </noscript>
+
+    <!-- Main React Entry -->
+    <script type="module" src="/src/main.jsx" defer></script>
+  </body>
+</html>

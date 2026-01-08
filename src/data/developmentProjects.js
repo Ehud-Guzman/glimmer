@@ -1,0 +1,171 @@
+export const developmentProjects = [
+  {
+    id: 1,
+    title: "GlimmerInk Creations",
+    description: "A web designer platform portfolio that shows case studies of my projects",
+    thumbnail: "/images/GlimmerInklogo1.webp",
+    fullImage: "/images/GlimmerInklogo1.webp",
+    url: "https://glimmerink.netlify.app",
+    stack: ["React", "Tailwind CSS", "Framer Motion", "Node.js"],
+    features: [
+      "Responsive design",
+      "Booking system integration",
+      "Admin dashboard",
+      "SEO optimized",
+    ],
+    category: "web",
+    year: "2023",
+    type: "Web Application"
+  },
+  {
+    id: 2,
+    title: "Vittorios Trades",
+    description: "E-commerce platform for cereals and grains with subscription services",
+    thumbnail: "/images/websites/vittorios.webp",
+    fullImage: "/images/websites/vittorios1.jpeg",
+    url: "https://vittoriostrades.com/",
+    stack: ["React", "Tailwind"],
+    features: [
+      "Product catalog with filters",
+      "Contact form",
+      
+      "Customer portal",
+    ],
+    category: "web",
+    year: "2024",
+    type: "Normal Website"
+  },
+  {
+    id: 3,
+    title: "Adit Investments",
+    description: "Computer shop and repair business website with e-commerce features",
+    thumbnail: "/images/websites/adit-admin.png",
+    fullImage: "/images/websites/adit-products.png",
+    url: "https://adit-investment.netlify.app/",
+    stack: ["React", "Express.js", "MongoDB", "Payment APIs"],
+    features: [
+      "Admin dashboard",
+      "Inventory tracking",
+      "Sales analytics",
+      "CRUD operations for products",
+    ],
+    category: "web",
+    year: "2024",
+    type: "E-commerce Website"
+  },
+  {
+    id: 4,
+    title: "GlimmerHope Hospital",
+    description: "Healthcare management system for patient records and appointments",
+    thumbnail: "/images/glimmerhope1.webp",
+    fullImage: "/images/glimmerhope1.webp",
+    url: "https://glimmerhope.netlify.app/",
+    stack: ["React", "TypeScript", "GraphQL", "PostgreSQL"],
+    features: [
+      "Electronic Health Records",
+      "Appointment scheduling",
+      "Telemedicine integration",
+      "HIPAA compliant",
+    ],
+    category: "system",
+    year: "2024",
+    type: "Healthcare System"
+  },
+  {
+    id: 5,
+    title: "Sunshine Schools",
+    description: "Educational management system for student and staff administration",
+    thumbnail: "/images/sunshine.webp",
+    fullImage: "/images/sunshine.webp",
+    url: "https://sunshineshools.netlify.app/",
+    stack: ["React", "Next.js", "Prisma", "AWS"],
+    features: [
+      "Student portal",
+      "Grade management",
+      "Attendance tracking",
+      "Parent communication",
+    ],
+    category: "system",
+    year: "2025",
+    type: "Education Management System"
+  },
+  {
+    id: 6,
+    title: "Njoroge and Partners Advocates",
+    description: "Legal practice management system with case tracking",
+    thumbnail: "/images/njoro.webp",
+    fullImage: "/images/njoro.webp",
+    url: "https://njorolawfirm.netlify.app/",
+    stack: ["React", "Redux", "Express", "MySQL"],
+    features: [
+      "Case management",
+      "Document automation",
+      "Time tracking",
+      "Client portal",
+    ],
+    category: "system",
+    year: "2025",
+    type: "Legal Practice System"
+  },
+  {
+    id: 7,
+    title: "Premium Cars KE",
+    description: "Car dealership management and inventory system",
+    thumbnail: "/images/premiumcars.webp",
+    fullImage: "/images/premiumcars.webp",
+    url: "https://premiumcarske.netlify.app/",
+    stack: ["React", "Tailwind", "Node.js", "MongoDB"],
+    features: [
+      "Vehicle inventory management",
+      "CRM integration",
+      "Test drive scheduling",
+      "Sales analytics",
+    ],
+    category: "system",
+    year: "2025",
+    type: "Automotive Management System"
+  },
+  {
+    id: 8,
+    title: "TaskFlow Mobile",
+    description: "Productivity app with team collaboration features",
+    thumbnail: "/images/taskflow-mockup.webp",
+    fullImage: "/images/taskflow-mockup.webp",
+    url: "https://taskflow-app.com",
+    stack: ["React Native", "Expo", "Firebase", "Redux Toolkit"],
+    features: [
+      "Real-time collaboration",
+      "Offline functionality",
+      "Push notifications",
+      "File attachments",
+    ],
+    category: "app",
+    year: "2024",
+    type: "Mobile Application"
+  },
+  {
+    id: 9,
+    title: "FinTrack Pro",
+    description: "Personal finance management app with budgeting tools",
+    thumbnail: "/images/fintrack-mockup.webp",
+    fullImage: "/images/fintrack-mockup.webp",
+    url: "https://fintrackpro.app",
+    stack: ["Flutter", "Dart", "Firebase", "Plaid API"],
+    features: [
+      "Bank account integration",
+      "Budget planning",
+      "Investment tracking",
+      "Financial reports",
+    ],
+    category: "app",
+    year: "2024",
+    type: "Mobile Application"
+  },
+];
+
+export const workCategories = [
+  { id: "all", label: "All Projects" },
+  { id: "web", label: "Web Applications" },
+  { id: "app", label: "Mobile Apps" },
+  { id: "system", label: "Business Systems" },
+];
