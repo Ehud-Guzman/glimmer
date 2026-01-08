@@ -4,8 +4,8 @@ import { useState } from "react";
 import FooterBrand from "./FooterBrand";
 import FooterNav from "./FooterNav";
 import FooterContact from "./FooterContact";
-import FooterLegal from "./FooterLegal";
-import BackToTopButton from "./BackToTopButton";
+
+
 import footerStructure from "@/data/footerData";
 
 const containerVariants = {
@@ -63,7 +63,7 @@ const Footer = () => {
   </motion.div>
 </div>
       
-      <BackToTopButton />
+      
     </motion.footer>
   );
 };

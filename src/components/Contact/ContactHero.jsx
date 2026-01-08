@@ -89,29 +89,6 @@ const ContactHero = () => {
           ))}
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="mt-12"
-          onClick={() => document.getElementById('contact-form')?.scrollIntoView({ 
-            behavior: 'smooth' 
-          })}
-        >
-          <div className="flex flex-col items-center gap-3 cursor-pointer group">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">
-              Get in touch
-            </div>
-            <div className="w-6 h-10 border border-gray-300 dark:border-gray-600 group-hover:border-primary dark:group-hover:border-primary-light rounded-full flex justify-center transition-colors">
-              <motion.div
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="w-1.5 h-3 bg-primary dark:bg-primary-light rounded-full mt-2"
-              />
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
 
       {/* Floating elements */}
       <motion.div
