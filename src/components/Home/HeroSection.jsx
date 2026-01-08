@@ -20,11 +20,11 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col md:flex-row items-center justify-between overflow-hidden px-4 md:px-16 lg:px-32 bg-gradient-to-br from-background-light to-white dark:from-background-dark dark:to-gray-900">
-      
+    <section className="relative min-h-[90vh] flex flex-col md:flex-row items-center justify-center md:justify-start gap-12 md:gap-16 overflow-hidden px-4 md:px-16 lg:px-32">
+
       {/* Left: Hero Text */}
       <motion.div
-        className="w-full md:w-1/2 relative z-20 text-center md:text-left mb-8 md:mb-0 px-4 md:px-8 lg:px-12"
+        className="flex-1 max-w-xl md:max-w-2xl relative z-20 text-center md:text-left mb-8 md:mb-0 px-2 md:px-0"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -44,7 +44,7 @@ const HeroSection = () => {
         </motion.h1>
 
         <motion.p
-          className="text-lg md:text-xl mb-8 text-text-light/80 dark:text-text-dark/80 max-w-2xl leading-relaxed font-mono min-h-[60px] border-l-4 border-primary pl-4"
+          className="text-lg md:text-xl mb-8 text-text-light/80 dark:text-text-dark/80 leading-relaxed font-mono min-h-[60px] border-l-4 border-primary pl-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -97,7 +97,7 @@ const HeroSection = () => {
 
       {/* Right: Illustration/Image */}
       <motion.div
-        className="w-full md:w-1/2 flex justify-center md:justify-end mb-8 md:mb-0 px-4 md:px-8 lg:px-12"
+        className="w-full md:w-auto flex justify-center md:justify-end mb-8 md:mb-0 px-4 md:px-0"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7 }}
