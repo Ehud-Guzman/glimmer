@@ -20,7 +20,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col md:flex-row items-center justify-center md:justify-start gap-12 md:gap-16 overflow-hidden px-4 md:px-16 lg:px-32">
+    <section className="relative min-h-[90vh] flex flex-col md:flex-row items-center justify-center md:justify-start gap-12 md:gap-16 overflow-hidden px-4 md:px-16 lg:px-32 pt-16 md:pt-0">
 
       {/* Left: Hero Text */}
       <motion.div
