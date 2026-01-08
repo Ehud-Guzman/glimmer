@@ -1,10 +1,11 @@
-// components/Home/HeroSection.jsx (updated with your palette)
+// components/Home/HeroSection.jsx
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const HeroSection = () => {
   const [typed, setTyped] = useState("");
-  const fullText = "I'm a web developer turning complex problems into seamless digital experiences.";
+  const fullText =
+    "I'm a web developer turning complex problems into seamless digital experiences.";
   const typingSpeed = 40;
 
   useEffect(() => {
@@ -19,30 +20,11 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col md:flex-row items-center justify-center overflow-hidden px-4 md:px-16 bg-gradient-to-br from-background-light to-white dark:from-background-dark dark:to-gray-900">
+    <section className="relative min-h-[90vh] flex flex-col md:flex-row items-center justify-between overflow-hidden px-4 md:px-16 lg:px-32 bg-gradient-to-br from-background-light to-white dark:from-background-dark dark:to-gray-900">
       
-     
-
-      {/* Left Image / Illustration */}
+      {/* Left: Hero Text */}
       <motion.div
-        className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0 px-4"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        <div className="relative w-full max-w-lg">
-          <div className="absolute -inset-4 bg-gradient-to-r from-primary to-primary-light dark:from-primary-dark dark:to-primary rounded-2xl blur-xl opacity-20" />
-          <img
-            src="/images/illustration.png" 
-            alt="Web development illustration"
-            className="relative w-full rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800"
-          />
-        </div>
-      </motion.div>
-
-      {/* Hero Text Content */}
-      <motion.div
-        className="relative z-20 text-center md:text-left max-w-3xl px-4 md:px-12"
+        className="w-full md:w-1/2 relative z-20 text-center md:text-left mb-8 md:mb-0 px-4 md:px-8 lg:px-12"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -92,7 +74,7 @@ const HeroSection = () => {
         </motion.div>
 
         {/* Stats */}
-        <motion.div 
+        <motion.div
           className="mt-12 flex flex-wrap gap-6 justify-center md:justify-start"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -103,19 +85,32 @@ const HeroSection = () => {
             { label: "Clients", value: "20+" },
             { label: "Experience", value: "2 years" },
           ].map((stat, index) => (
-            <div key={index} className="text-center">
+            <div key={index} className="text-center md:text-left">
               <div className="text-2xl font-bold text-primary dark:text-primary-light">
                 {stat.value}
               </div>
-              <div className="text-sm text-text-muted">
-                {stat.label}
-              </div>
+              <div className="text-sm text-text-muted">{stat.label}</div>
             </div>
           ))}
         </motion.div>
       </motion.div>
 
-     
+      {/* Right: Illustration/Image */}
+      <motion.div
+        className="w-full md:w-1/2 flex justify-center md:justify-end mb-8 md:mb-0 px-4 md:px-8 lg:px-12"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.7 }}
+      >
+        <div className="relative w-full md:max-w-md lg:max-w-lg">
+          <div className="absolute -inset-4 bg-gradient-to-r from-primary to-primary-light dark:from-primary-dark dark:to-primary rounded-2xl blur-xl opacity-20" />
+          <img
+            src="/images/illustration.png"
+            alt="Web development illustration"
+            className="relative w-full rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800"
+          />
+        </div>
+      </motion.div>
     </section>
   );
 };
