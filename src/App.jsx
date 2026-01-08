@@ -19,15 +19,14 @@ function App() {
   // Track page views
   useEffect(() => {
     pageview(location.pathname);
-  }, [location]);
+  }, [location.pathname]);
 
   // Lock scroll when menu is open
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
       document.body.style.overflow = "";
-    }
+    };
   }, [isMenuOpen]);
 
   return (
@@ -41,8 +40,8 @@ function App() {
           isMenuOpen ? "blur-sm pointer-events-none select-none" : ""
         }`}
       >
-        {/* Suspense fallback while lazy loading pages */}
-        <Suspense fallback={<div className="flex justify-center items-center h-full py-20">Loading...</div>}>
+        {/* No loading UI */}
+        <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/work" element={<Work />} />
