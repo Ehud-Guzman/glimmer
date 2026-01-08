@@ -89,6 +89,8 @@ const ContactHero = () => {
           ))}
         </div>
 
+      
+      </motion.div>
 
       {/* Floating elements */}
       <motion.div
