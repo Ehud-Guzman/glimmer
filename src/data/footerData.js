@@ -15,7 +15,7 @@ const footerStructure = {
     logo: {
       primary: "Glimmer",
       secondary: "Ink",
-      tagline: "Where ink meets imagination",
+      tagline: "Where Code meets imagination",
     },
     description:
       "Transforming ideas into exceptional digital experiences through innovative design and development solutions.",
