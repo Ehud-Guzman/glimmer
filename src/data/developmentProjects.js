@@ -28,20 +28,7 @@ export const developmentProjects = [
   featured: true,
 },
 
-  {
-    id: 1,
-    title: "GlimmerInk Creations",
-    description:
-      "My portfolio platform showcasing real case studies, services, and contact flow for client acquisition.",
-    thumbnail: "/images/GlimmerInklogo1.webp",
-    fullImage: "/images/GlimmerInklogo1.webp",
-    url: "https://glimmerink.netlify.app",
-    stack: ["React", "Tailwind CSS", "Framer Motion"],
-    features: ["Responsive UI", "Service pages", "Case study layout", "SEO-ready structure"],
-    category: "web",
-    year: "2023",
-    type: "Portfolio Website",
-  },
+
 
   {
     id: 2,
@@ -56,6 +43,22 @@ export const developmentProjects = [
     category: "web",
     year: "2024",
     type: "Business Website",
+  },
+
+   {
+    id: 6,
+    title: "Sunshine Schools",
+    description:
+      "School dashboard UI for performance and staff/student views (frontend build).",
+    thumbnail: "/images/websites/sunshine.webp",
+    fullImage: "/images/websites/sunshine.webp",
+    url: "https://sunshineshools.netlify.app/",
+    stack: ["React", "Tailwind CSS", "Vite"],
+    features: ["Performance overview", "Teacher views", "Responsive layout"],
+    category: "web",
+    year: "2025",
+    type: "Education Dashboard",
+    status: "demo",
   },
 
   {
@@ -95,20 +98,21 @@ export const developmentProjects = [
   },
 
   {
-    id: 6,
-    title: "Sunshine Schools",
+    id: 1,
+    title: "GlimmerInk Creations",
     description:
-      "School dashboard UI for performance and staff/student views (frontend build).",
-    thumbnail: "/images/websites/sunshine.webp",
-    fullImage: "/images/websites/sunshine.webp",
-    url: "https://sunshineshools.netlify.app/",
-    stack: ["React", "Tailwind CSS", "Vite"],
-    features: ["Performance overview", "Teacher views", "Responsive layout"],
+      "My portfolio platform showcasing real case studies, services, and contact flow for client acquisition.",
+    thumbnail: "/images/GlimmerInklogo1.webp",
+    fullImage: "/images/GlimmerInklogo1.webp",
+    url: "https://glimmerink.co.ke",
+    stack: ["React", "Tailwind CSS", "Framer Motion"],
+    features: ["Responsive UI", "Service pages", "Case study layout", "SEO-ready structure"],
     category: "web",
-    year: "2025",
-    type: "Education Dashboard",
-    status: "demo",
+    year: "2023",
+    type: "Portfolio Website",
   },
+
+ 
 
   {
     id: 7,

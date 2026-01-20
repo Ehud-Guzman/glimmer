@@ -123,7 +123,7 @@ const footerStructure = {
   credits: {
     text: "Website Created by GlimmerInk Creations",
     phone: "+254 746 527 253",
-    url: "https://glimmerink.netlify.app",
+    url: "https://glimmerink.co.ke",
   },
 };
 
