@@ -5,7 +5,6 @@ import FooterBrand from "./FooterBrand";
 import FooterNav from "./FooterNav";
 import FooterContact from "./FooterContact";
 
-
 import footerStructure from "@/data/footerData";
 
 const containerVariants = {
@@ -21,6 +20,21 @@ const containerVariants = {
 
 const Footer = () => {
   const [activeHover, setActiveHover] = useState(null);
+
+  // ✅ guards so footer never bricks during edits
+  const brand = footerStructure?.brand ?? {
+    logo: { primary: "Glimmer", secondary: "Ink", tagline: "" },
+    description: "",
+    cta: { text: "Start your project", url: "/contact", hoverText: "Let's create →" },
+  };
+
+  const navigation = Array.isArray(footerStructure?.navigation)
+    ? footerStructure.navigation
+    : [];
+
+  const contact = footerStructure?.contact ?? { title: "Get in touch", methods: [], social: [] };
+
+  const credits = footerStructure?.credits ?? { text: "", phone: "", url: "#" };
 
   return (
     <motion.footer
@@ -38,32 +52,32 @@ const Footer = () => {
 
       {/* Grid Layout */}
       <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-12 gap-12 relative z-10">
-        <FooterBrand brand={footerStructure.brand} />
+        <FooterBrand brand={brand} />
         <FooterNav
-          navigation={footerStructure.navigation}
+          navigation={navigation}
           activeHover={activeHover}
           setActiveHover={setActiveHover}
         />
-        <FooterContact contact={footerStructure.contact} />
+        <FooterContact contact={contact} />
       </div>
 
-    {/* Credits */}
-<div className="pb-8 md:pb-4 pt-2 border-t border-gray-100 dark:border-gray-800 mx-6">
-  <motion.div
-    className="text-center text-xs opacity-50 hover:opacity-80 transition-opacity"
-    initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    viewport={{ once: true }}
-    transition={{ delay: 0.5 }}
-  >
-    <a href={footerStructure.credits.url} className="inline-flex items-center gap-1">
-      {footerStructure.credits.text} || {footerStructure.credits.phone}
-      <span className="text-[10px]">↗</span>
-    </a>
-  </motion.div>
-</div>
-      
-      
+      {/* Credits (your original style) */}
+      <div className="pb-8 md:pb-4 pt-2 border-t border-gray-100 dark:border-gray-800 mx-6">
+        <motion.div
+          className="text-center text-xs opacity-50 hover:opacity-80 transition-opacity"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          {credits?.text ? (
+            <a href={credits.url || "#"} className="inline-flex items-center gap-1">
+              {credits.text} || {credits.phone}
+              <span className="text-[10px]">↗</span>
+            </a>
+          ) : null}
+        </motion.div>
+      </div>
     </motion.footer>
   );
 };

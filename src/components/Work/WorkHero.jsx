@@ -54,25 +54,26 @@ const WorkHero = () => {
             modern technologies and clean architecture principles.
           </p>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            <div className="text-center p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl backdrop-blur-sm">
-              <div className="text-2xl font-bold text-primary">15+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Projects</div>
-            </div>
-            <div className="text-center p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl backdrop-blur-sm">
-              <div className="text-2xl font-bold text-primary">24/7</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Support</div>
-            </div>
-            <div className="text-center p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl backdrop-blur-sm">
-              <div className="text-2xl font-bold text-primary">99%</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Satisfaction</div>
-            </div>
-            <div className="text-center p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl backdrop-xl backdrop-blur-sm">
-              <div className="text-2xl font-bold text-primary">&lt;3s</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Load Time</div>
-            </div>
-          </div>
+       {/* Stats */}
+<div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+  <div className="text-center p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl backdrop-blur-sm">
+    <div className="text-2xl font-bold text-primary">Client-first</div>
+    <div className="text-sm text-gray-600 dark:text-gray-400">Build Approach</div>
+  </div>
+  <div className="text-center p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl backdrop-blur-sm">
+    <div className="text-2xl font-bold text-primary">Fast</div>
+    <div className="text-sm text-gray-600 dark:text-gray-400">Delivery Cycles</div>
+  </div>
+  <div className="text-center p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl backdrop-blur-sm">
+    <div className="text-2xl font-bold text-primary">Clean</div>
+    <div className="text-sm text-gray-600 dark:text-gray-400">UI & UX</div>
+  </div>
+  <div className="text-center p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl backdrop-blur-sm">
+    <div className="text-2xl font-bold text-primary">Scalable</div>
+    <div className="text-sm text-gray-600 dark:text-gray-400">Systems</div>
+  </div>
+</div>
+
 
           {/* Tech Stack Badges */}
           <div className="flex flex-wrap gap-2 mb-8">

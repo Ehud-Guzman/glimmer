@@ -1,3 +1,4 @@
+// src/data/footerData.js
 import {
   FiMail,
   FiPhone,
@@ -25,23 +26,26 @@ const footerStructure = {
     },
   },
 
+  // ✅ MUST match your current App routes
   navigation: [
     {
       title: "Discover",
       links: [
-        { name: "Our Work", url: "/portfolio", hoverEffect: "scale" },
+        { name: "Home", url: "/", hoverEffect: "underline" },
+        { name: "Work", url: "/work", hoverEffect: "scale" },
         { name: "Services", url: "/services", hoverEffect: "underline" },
-        { name: "Process", url: "/process", hoverEffect: "arrow" },
-        { name: "About Us", url: "/about", hoverEffect: "highlight" },
+        { name: "About", url: "/about", hoverEffect: "highlight" },
+        { name: "Contact", url: "/contact", hoverEffect: "arrow" },
       ],
     },
     {
       title: "Resources",
       links: [
-        { name: "Blog", url: "/blog", hoverEffect: "scale" },
-        { name: "Case Studies", url: "/case-studies", hoverEffect: "underline" },
-        { name: "Help Center", url: "/help", hoverEffect: "arrow" },
-        { name: "Careers", url: "/careers", hoverEffect: "highlight" },
+        // ✅ real links only; keep placeholders as "#" until you build routes
+        { name: "Case Studies", url: "#", hoverEffect: "underline" },
+        { name: "Blog", url: "#", hoverEffect: "scale" },
+        { name: "Help Center", url: "#", hoverEffect: "arrow" },
+        { name: "Careers", url: "#", hoverEffect: "highlight" },
       ],
     },
   ],
@@ -50,7 +54,7 @@ const footerStructure = {
     title: "Get in touch",
     methods: [
       {
-        icon: FiMail, // NOT JSX
+        icon: FiMail,
         text: "nyamuehud@gmail.com",
         copyable: true,
         hoverColor: "text-primary",
@@ -67,7 +71,7 @@ const footerStructure = {
         icon: FiMapPin,
         text: "Freelance, Kenya",
         action: () => {
-          window.open("https://maps.google.com?q=Nairobi+Kenya", "_blank");
+          window.open("https://maps.google.com?q=Kenya", "_blank");
         },
         hoverColor: "text-accent",
       },
@@ -92,6 +96,8 @@ const footerStructure = {
         label: "Dribbble",
         bgHover: "bg-gradient-to-br from-pink-400 to-red-500",
       },
+
+      // ✅ If you don’t have them yet, keep as "#" (and component should hide them)
       {
         icon: FaBehance,
         url: "#",
@@ -107,10 +113,11 @@ const footerStructure = {
     ],
   },
 
+  // keep this if you’re not rendering FooterLegal; otherwise pass it in
   legal: [
-    { name: "Privacy Policy", url: "/privacypolicy" },
-    { name: "Terms of Service", url: "/termsofservice" },
-    { name: "Cookie Policy", url: "/cookies" },
+    { name: "Privacy Policy", url: "#" },
+    { name: "Terms of Service", url: "#" },
+    { name: "Cookie Policy", url: "#" },
   ],
 
   credits: {

@@ -1,171 +1,154 @@
 export const developmentProjects = [
+  // =========================
+  // FEATURED / STRONGEST FIRST
+  // =========================
+
+{
+  id: 4,
+  title: "School Management System",
+  description:
+    "Multi-tenant school platform for student records, attendance, fees, exams/results, and automated reporting.",
+  thumbnail: "/images/systems/attendance-modal.png",
+  fullImage: "/images/systems/exam-modal.png",
+  url: "", // keep empty until real live link (prevents fake demo button)
+  stack: ["React", "Vite", "Tailwind CSS", "Node.js", "PostgreSQL", "Prisma"],
+  features: [
+    "Multi-tenant (school isolation)",
+    "Student & class management",
+    "Attendance sessions & tracking",
+    "Fees workflow + printable receipts",
+    "Exams & results processing",
+    "Role-based access (Admin/Teacher/Bursar)",
+    "Reports & exports",
+  ],
+  category: "system",
+  year: "2025",
+  type: "School Management System",
+  status: "in-progress",
+  featured: true,
+},
+
   {
     id: 1,
     title: "GlimmerInk Creations",
-    description: "A web designer platform portfolio that shows case studies of my projects",
+    description:
+      "My portfolio platform showcasing real case studies, services, and contact flow for client acquisition.",
     thumbnail: "/images/GlimmerInklogo1.webp",
     fullImage: "/images/GlimmerInklogo1.webp",
     url: "https://glimmerink.netlify.app",
-    stack: ["React", "Tailwind CSS", "Framer Motion", "Node.js"],
-    features: [
-      "Responsive design",
-      "Booking system integration",
-      "Admin dashboard",
-      "SEO optimized",
-    ],
+    stack: ["React", "Tailwind CSS", "Framer Motion"],
+    features: ["Responsive UI", "Service pages", "Case study layout", "SEO-ready structure"],
     category: "web",
     year: "2023",
-    type: "Web Application"
+    type: "Portfolio Website",
   },
+
   {
     id: 2,
     title: "Vittorios Trades",
-    description: "E-commerce platform for cereals and grains with subscription services",
+    description:
+      "E-commerce website for cereals and grains with a product catalog and inquiry/contact flows.",
     thumbnail: "/images/websites/vittorios.webp",
     fullImage: "/images/websites/vittorios1.jpeg",
     url: "https://vittoriostrades.com/",
     stack: ["React", "Tailwind"],
-    features: [
-      "Product catalog with filters",
-      "Contact form",
-      
-      "Customer portal",
-    ],
+    features: ["Product catalog", "Filters", "Contact/inquiry form", "Mobile-first layout"],
     category: "web",
     year: "2024",
-    type: "Normal Website"
+    type: "Business Website",
   },
+
   {
     id: 3,
     title: "Adit Investments",
-    description: "Computer shop and repair business website with e-commerce features",
+    description:
+      "Computer shop & repair business site with an admin dashboard and product management features.",
     thumbnail: "/images/websites/adit-admin.png",
     fullImage: "/images/websites/adit-products.png",
     url: "https://adit-investment.netlify.app/",
     stack: ["React", "Express.js", "MongoDB", "Payment APIs"],
-    features: [
-      "Admin dashboard",
-      "Inventory tracking",
-      "Sales analytics",
-      "CRUD operations for products",
-    ],
+    features: ["Admin dashboard", "Inventory tracking", "Sales analytics", "Product CRUD"],
     category: "web",
     year: "2024",
-    type: "E-commerce Website"
+    type: "E-commerce Website",
   },
-  {
-    id: 4,
-    title: "GlimmerHope Hospital",
-    description: "Healthcare management system for patient records and appointments",
-    thumbnail: "/images/glimmerhope1.webp",
-    fullImage: "/images/glimmerhope1.webp",
-    url: "https://glimmerhope.netlify.app/",
-    stack: ["React", "TypeScript", "GraphQL", "PostgreSQL"],
-    features: [
-      "Electronic Health Records",
-      "Appointment scheduling",
-      "Telemedicine integration",
-      "HIPAA compliant",
-    ],
-    category: "system",
-    year: "2024",
-    type: "Healthcare System"
-  },
+
+  // =========================
+  // SYSTEMS
+  // =========================
+
+
   {
     id: 5,
-    title: "Sunshine Schools",
-    description: "Educational management system for student and staff administration",
-    thumbnail: "/images/sunshine.webp",
-    fullImage: "/images/sunshine.webp",
-    url: "https://sunshineshools.netlify.app/",
-    stack: ["React", "Next.js", "Prisma", "AWS"],
-    features: [
-      "Student portal",
-      "Grade management",
-      "Attendance tracking",
-      "Parent communication",
-    ],
+    title: "GlimmerHope Hospital",
+    description:
+      "Healthcare management concept with patient records and appointment scheduling workflows.",
+    thumbnail: "/images/websites/glimmerhope1.webp",
+    fullImage: "/images/websites/glimmerhope1.webp",
+    url: "https://glimmerhope.netlify.app/",
+    stack: ["React", "TypeScript", "GraphQL", "PostgreSQL"],
+    features: ["Patient records", "Appointments", "Role-based access", "Secure data flows"],
     category: "system",
-    year: "2025",
-    type: "Education Management System"
+    year: "2024",
+    type: "Healthcare System",
+    status: "demo", // removes legal risk
   },
+
   {
     id: 6,
-    title: "Njoroge and Partners Advocates",
-    description: "Legal practice management system with case tracking",
-    thumbnail: "/images/njoro.webp",
-    fullImage: "/images/njoro.webp",
-    url: "https://njorolawfirm.netlify.app/",
-    stack: ["React", "Redux", "Express", "MySQL"],
-    features: [
-      "Case management",
-      "Document automation",
-      "Time tracking",
-      "Client portal",
-    ],
-    category: "system",
+    title: "Sunshine Schools",
+    description:
+      "School dashboard UI for performance and staff/student views (frontend build).",
+    thumbnail: "/images/websites/sunshine.webp",
+    fullImage: "/images/websites/sunshine.webp",
+    url: "https://sunshineshools.netlify.app/",
+    stack: ["React", "Tailwind CSS", "Vite"],
+    features: ["Performance overview", "Teacher views", "Responsive layout"],
+    category: "web",
     year: "2025",
-    type: "Legal Practice System"
+    type: "Education Dashboard",
+    status: "demo",
   },
+
   {
     id: 7,
-    title: "Premium Cars KE",
-    description: "Car dealership management and inventory system",
-    thumbnail: "/images/premiumcars.webp",
-    fullImage: "/images/premiumcars.webp",
-    url: "https://premiumcarske.netlify.app/",
-    stack: ["React", "Tailwind", "Node.js", "MongoDB"],
-    features: [
-      "Vehicle inventory management",
-      "CRM integration",
-      "Test drive scheduling",
-      "Sales analytics",
-    ],
+    title: "Njoroge and Partners Advocates",
+    description:
+      "Legal practice management system concept with case tracking and client workflows.",
+    thumbnail: "/images/websites/njoro.webp",
+    fullImage: "/images/websites/njoro.webp",
+    url: "https://njorolawfirm.netlify.app/",
+    stack: ["React", "Redux", "Express", "MySQL"],
+    features: ["Case management", "Document workflows", "Time tracking", "Client portal"],
     category: "system",
     year: "2025",
-    type: "Automotive Management System"
+    type: "Legal Practice System",
+    status: "demo",
   },
+
+  // =========================
+  // OPTIONAL / IF YOU KEEP IT
+  // =========================
   {
     id: 8,
-    title: "TaskFlow Mobile",
-    description: "Productivity app with team collaboration features",
-    thumbnail: "/images/taskflow-mockup.webp",
-    fullImage: "/images/taskflow-mockup.webp",
-    url: "https://taskflow-app.com",
-    stack: ["React Native", "Expo", "Firebase", "Redux Toolkit"],
-    features: [
-      "Real-time collaboration",
-      "Offline functionality",
-      "Push notifications",
-      "File attachments",
-    ],
-    category: "app",
-    year: "2024",
-    type: "Mobile Application"
-  },
-  {
-    id: 9,
-    title: "FinTrack Pro",
-    description: "Personal finance management app with budgeting tools",
-    thumbnail: "/images/fintrack-mockup.webp",
-    fullImage: "/images/fintrack-mockup.webp",
-    url: "https://fintrackpro.app",
-    stack: ["Flutter", "Dart", "Firebase", "Plaid API"],
-    features: [
-      "Bank account integration",
-      "Budget planning",
-      "Investment tracking",
-      "Financial reports",
-    ],
-    category: "app",
-    year: "2024",
-    type: "Mobile Application"
+    title: "Premium Cars KE",
+    description: "Car dealership website showcasing vehicle listings and contact inquiries.",
+    thumbnail: "/images/placeholder-project.webp", // TODO: replace with real image
+    fullImage: "/images/placeholder-project.webp", // TODO: replace with real image
+    url: "https://premiumcarske.netlify.app/",
+    stack: ["React", "Tailwind"],
+    features: ["Vehicle listings", "Responsive layout", "Inquiry/contact CTA"],
+    category: "web",
+    year: "2025",
+    type: "Business Website",
+    status: "in-progress",
   },
 ];
 
 export const workCategories = [
   { id: "all", label: "All Projects" },
   { id: "web", label: "Web Applications" },
-  { id: "app", label: "Mobile Apps" },
   { id: "system", label: "Business Systems" },
+  // Keep app only when you actually add mobile projects
+  // { id: "app", label: "Mobile Apps" },
 ];

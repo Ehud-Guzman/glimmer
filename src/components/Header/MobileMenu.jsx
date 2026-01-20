@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,8 +20,19 @@ const navItems = [
   { name: "Contact", path: "/contact", preload: loadContact },
 ];
 
-export default function MobileMenu({ isOpen, toggleMenu, theme, toggleTheme }) {
+export default function MobileMenu({ isOpen, toggleMenu, closeMenu, theme, toggleTheme }) {
   if (typeof window === "undefined") return null;
+
+  const firstLinkRef = useRef(null);
+
+  const doClose = closeMenu || toggleMenu;
+
+  // Focus first link when opening (accessibility/premium UX)
+  useEffect(() => {
+    if (!isOpen) return;
+    const t = setTimeout(() => firstLinkRef.current?.focus(), 50);
+    return () => clearTimeout(t);
+  }, [isOpen]);
 
   const ui = (
     <AnimatePresence>
@@ -34,17 +46,19 @@ export default function MobileMenu({ isOpen, toggleMenu, theme, toggleTheme }) {
           aria-modal="true"
           role="dialog"
         >
-          {/* FULL COVER BACKDROP (nothing beneath visible) */}
-          <motion.div
+          {/* Backdrop */}
+          <motion.button
+            type="button"
+            aria-label="Close menu backdrop"
             className="absolute inset-0 bg-black"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.92 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            onClick={toggleMenu}
+            onClick={doClose}
           />
 
-          {/* Menu panel (still full screen, clean) */}
+          {/* Menu panel */}
           <motion.div
             className="absolute inset-0 bg-white dark:bg-gray-900 flex flex-col"
             initial={{ y: "100%" }}
@@ -61,7 +75,8 @@ export default function MobileMenu({ isOpen, toggleMenu, theme, toggleTheme }) {
                 <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
 
                 <button
-                  onClick={toggleMenu}
+                  type="button"
+                  onClick={doClose}
                   aria-label="Close menu"
                   className="p-2 rounded-lg text-gray-500 hover:bg-gray-100
                              dark:text-gray-400 dark:hover:bg-gray-800 transition-colors"
@@ -72,15 +87,16 @@ export default function MobileMenu({ isOpen, toggleMenu, theme, toggleTheme }) {
             </div>
 
             <nav className="flex-1 flex flex-col p-6">
-              {navItems.map((item) => (
+              {navItems.map((item, idx) => (
                 <NavLink
                   key={item.name}
                   to={item.path}
+                  ref={idx === 0 ? firstLinkRef : undefined}
                   onTouchStart={item.preload}
                   onMouseEnter={item.preload}
-                  onClick={toggleMenu}
+                  onClick={doClose}
                   className={({ isActive }) =>
-                    `group relative px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 ${
+                    `group relative px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary ${
                       isActive
                         ? "text-primary dark:text-primary-light bg-primary/10"
                         : "text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -110,6 +126,5 @@ export default function MobileMenu({ isOpen, toggleMenu, theme, toggleTheme }) {
     </AnimatePresence>
   );
 
-  // Portal = escapes Header stacking context completely
   return createPortal(ui, document.body);
 }

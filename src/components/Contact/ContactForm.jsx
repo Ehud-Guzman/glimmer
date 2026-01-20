@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Send, Loader, User, Mail, Phone, MessageSquare } from "lucide-react";
 import emailjs from "@emailjs/browser";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const ContactForm = ({ preset = null }) => {
   const [formData, setFormData] = useState({
@@ -16,6 +18,15 @@ const ContactForm = ({ preset = null }) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  // EmailJS config from env (Vite)
+  const emailJsConfig = useMemo(() => {
+    return {
+      serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+    };
+  }, []);
 
   /* =========================
      Apply CTA preset (if any)
@@ -51,6 +62,7 @@ const ContactForm = ({ preset = null }) => {
   ========================== */
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (errors[name]) {
@@ -60,16 +72,27 @@ const ContactForm = ({ preset = null }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.from_name.trim()) newErrors.from_name = "Name is required";
-    if (!formData.from_email.trim()) {
-      newErrors.from_email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.from_email)) {
-      newErrors.from_email = "Enter a valid email";
-    }
-    if (!formData.message.trim()) newErrors.message = "Message is required";
+
+    const name = formData.from_name.trim();
+    const email = formData.from_email.trim();
+    const msg = formData.message.trim();
+
+    if (!name) newErrors.from_name = "Name is required";
+    if (!email) newErrors.from_email = "Email is required";
+    else if (!EMAIL_RE.test(email)) newErrors.from_email = "Enter a valid email";
+    if (!msg) newErrors.message = "Message is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const trackSubmit = (status) => {
+    if (!window.gtag) return;
+    window.gtag("event", "form_submit", {
+      form_name: "ContactForm",
+      status,
+      service: formData.service || "none",
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -79,26 +102,39 @@ const ContactForm = ({ preset = null }) => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
+    const { serviceId, templateId, publicKey } = emailJsConfig;
+
+    // Hard fail with a helpful message if env vars are missing
+    if (!serviceId || !templateId || !publicKey) {
+      console.error("Missing EmailJS env vars. Check .env configuration.");
+      setSubmitStatus({
+        type: "error",
+        message: "Form is not configured yet. Please contact via email/WhatsApp.",
+      });
+      trackSubmit("error");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      await emailjs.sendForm(
-        "service-2000",
-        "template_2000",
-        e.target,
-        "mu8JNmKu-gMTErqQ2"
-      );
+      // Send using the controlled values (no need for sendForm)
+      const payload = {
+        from_name: formData.from_name.trim(),
+        from_email: formData.from_email.trim(),
+        phone: formData.phone.trim(),
+        subject: formData.subject.trim(),
+        service: formData.service,
+        message: formData.message.trim(),
+      };
+
+      await emailjs.send(serviceId, templateId, payload, { publicKey });
 
       setSubmitStatus({
         type: "success",
         message: "Thank you! We’ll respond within 24 hours.",
       });
 
-      if (window.gtag) {
-        window.gtag("event", "form_submit", {
-          form_name: "ContactForm",
-          status: "success",
-          service: formData.service || "none",
-        });
-      }
+      trackSubmit("success");
 
       setFormData({
         from_name: "",
@@ -108,22 +144,15 @@ const ContactForm = ({ preset = null }) => {
         service: "",
         message: "",
       });
-
-      e.target.reset();
     } catch (err) {
       console.error("EmailJS Error:", err);
+
       setSubmitStatus({
         type: "error",
         message: "Something went wrong. Please try again.",
       });
 
-      if (window.gtag) {
-        window.gtag("event", "form_submit", {
-          form_name: "ContactForm",
-          status: "error",
-          service: formData.service || "none",
-        });
-      }
+      trackSubmit("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -135,8 +164,7 @@ const ContactForm = ({ preset = null }) => {
   const inputClass =
     "w-full pl-10 pr-4 py-3 rounded-lg border bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary-light/20";
 
-  const errorClass =
-    "border-red-500 focus:border-red-500 focus:ring-red-500";
+  const errorClass = "border-red-500 focus:border-red-500 focus:ring-red-500";
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 border border-gray-200 dark:border-gray-700">
@@ -158,25 +186,33 @@ const ContactForm = ({ preset = null }) => {
               ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800"
               : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800"
           }`}
+          role="status"
+          aria-live="polite"
         >
           {submitStatus.message}
         </div>
       )}
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5" noValidate>
         {/* Name + Email */}
         <div className="grid md:grid-cols-2 gap-5">
           <div>
-            <label className="block text-sm font-medium mb-2">Name *</label>
+            <label className="block text-sm font-medium mb-2" htmlFor="from_name">
+              Name *
+            </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
+                id="from_name"
                 name="from_name"
+                type="text"
                 value={formData.from_name}
                 onChange={handleChange}
                 className={`${inputClass} ${errors.from_name ? errorClass : ""}`}
                 placeholder="Your name"
+                autoComplete="name"
+                required
               />
             </div>
             {errors.from_name && (
@@ -185,21 +221,26 @@ const ContactForm = ({ preset = null }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Email *</label>
+            <label className="block text-sm font-medium mb-2" htmlFor="from_email">
+              Email *
+            </label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
+                id="from_email"
                 name="from_email"
+                type="email"
                 value={formData.from_email}
                 onChange={handleChange}
                 className={`${inputClass} ${errors.from_email ? errorClass : ""}`}
                 placeholder="you@email.com"
+                autoComplete="email"
+                inputMode="email"
+                required
               />
             </div>
             {errors.from_email && (
-              <p className="text-sm text-red-500 mt-1">
-                {errors.from_email}
-              </p>
+              <p className="text-sm text-red-500 mt-1">{errors.from_email}</p>
             )}
           </div>
         </div>
@@ -207,31 +248,36 @@ const ContactForm = ({ preset = null }) => {
         {/* Phone + Service */}
         <div className="grid md:grid-cols-2 gap-5">
           <div>
-            <label className="block text-sm font-medium mb-2">Phone</label>
+            <label className="block text-sm font-medium mb-2" htmlFor="phone">
+              Phone
+            </label>
             <div className="relative">
               <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
+                id="phone"
                 name="phone"
+                type="tel"
                 value={formData.phone}
                 onChange={handleChange}
                 className={inputClass}
                 placeholder="+254 700 000 000"
+                autoComplete="tel"
+                inputMode="tel"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label className="block text-sm font-medium mb-2" htmlFor="service">
               Service
             </label>
             <select
+              id="service"
               name="service"
               value={formData.service}
               disabled={!!preset}
               onChange={handleChange}
-              className={`${inputClass} ${
-                preset ? "opacity-80 cursor-not-allowed" : ""
-              }`}
+              className={`${inputClass} ${preset ? "opacity-80 cursor-not-allowed" : ""}`}
             >
               <option value="">Select a service</option>
               <option value="consulting">Consulting</option>
@@ -247,38 +293,41 @@ const ContactForm = ({ preset = null }) => {
 
         {/* Subject */}
         <div>
-          <label className="block text-sm font-medium mb-2">Subject</label>
+          <label className="block text-sm font-medium mb-2" htmlFor="subject">
+            Subject
+          </label>
           <input
+            id="subject"
             name="subject"
+            type="text"
             value={formData.subject}
             onChange={handleChange}
             className={inputClass}
             placeholder="Project inquiry"
+            autoComplete="off"
           />
         </div>
 
         {/* Message */}
         <div>
-          <label className="block text-sm font-medium mb-2">
+          <label className="block text-sm font-medium mb-2" htmlFor="message">
             Message *
           </label>
           <div className="relative">
             <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
             <textarea
+              id="message"
               name="message"
               rows={4}
               value={formData.message}
               onChange={handleChange}
-              className={`${inputClass} resize-none ${
-                errors.message ? errorClass : ""
-              }`}
+              className={`${inputClass} resize-none ${errors.message ? errorClass : ""}`}
               placeholder="Tell us about your project…"
+              required
             />
           </div>
           {errors.message && (
-            <p className="text-sm text-red-500 mt-1">
-              {errors.message}
-            </p>
+            <p className="text-sm text-red-500 mt-1">{errors.message}</p>
           )}
         </div>
 

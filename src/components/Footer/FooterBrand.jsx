@@ -7,6 +7,9 @@ const hoverItem = {
 };
 
 const FooterBrand = ({ brand }) => {
+  const logo = brand?.logo ?? {};
+  const cta = brand?.cta ?? {};
+
   return (
     <motion.div className="md:col-span-4 space-y-6">
       <motion.div
@@ -15,42 +18,32 @@ const FooterBrand = ({ brand }) => {
         transition={{ type: "spring" }}
       >
         <a href="/" className="text-3xl font-bold flex items-end">
-          <motion.span
-            className="text-primary"
-            whileHover={{ y: -3 }}
-          >
-            {brand.logo.primary}
+          <motion.span className="text-primary" whileHover={{ y: -3 }}>
+            {logo.primary || "Glimmer"}
           </motion.span>
-          <motion.span
-            className="text-text-light dark:text-text-dark"
-            whileHover={{ y: 3 }}
-          >
-            {brand.logo.secondary}
+          <motion.span className="text-text-light dark:text-text-dark" whileHover={{ y: 3 }}>
+            {logo.secondary || "Ink"}
           </motion.span>
         </a>
+
         <span className="text-xs uppercase tracking-widest text-text-muted">
-          {brand.logo.tagline}
+          {logo.tagline || ""}
         </span>
       </motion.div>
 
       <p className="text-lg text-text-light/80 dark:text-text-dark/80 leading-relaxed">
-        {brand.description}
+        {brand?.description || ""}
       </p>
 
-      <motion.div
-        className="relative group"
-        initial="rest"
-        whileHover="hover"
-        variants={hoverItem}
-      >
+      <motion.div className="relative group" initial="rest" whileHover="hover" variants={hoverItem}>
         <motion.a
-          href={brand.cta.url}
+          href={cta.url || "/contact"}
           className="inline-flex items-center gap-2 px-6 py-3.5 bg-primary text-white rounded-lg font-medium transition-all duration-300 overflow-hidden hover:bg-primary-dark"
         >
-          <span className="absolute inset-0 bg-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+          <span className="absolute inset-0 bg-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           <span className="relative z-10 flex items-center gap-2">
-            <span className="block group-hover:hidden">{brand.cta.text}</span>
-            <span className="hidden group-hover:block">{brand.cta.hoverText}</span>
+            <span className="block group-hover:hidden">{cta.text || "Start your project"}</span>
+            <span className="hidden group-hover:block">{cta.hoverText || "Let's create →"}</span>
           </span>
         </motion.a>
       </motion.div>

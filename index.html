@@ -6,8 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="robots" content="index, follow" />
-    <meta name="description" content="GlimmerInk Creations — premium digital design, poster art, and creative identity work crafted for modern brands." />
-    <meta name="keywords" content="GlimmerInk, design, branding, posters, UI, UX, digital art, creative studio, Kenya" />
+    <meta
+      name="description"
+      content="GlimmerInk Creations — premium digital design, poster art, and creative identity work crafted for modern brands."
+    />
+    <meta
+      name="keywords"
+      content="GlimmerInk, design, branding, posters, UI, UX, digital art, creative studio, Kenya"
+    />
     <meta name="author" content="Ehud Mwai - GlimmerInk Creations" />
     <meta name="theme-color" content="#6B46C1" />
 
@@ -17,7 +23,10 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -30,75 +39,83 @@
 
     <!-- Open Graph & Twitter -->
     <meta property="og:title" content="GlimmerInk Creations — Where Ink Meets Imagination" />
-    <meta property="og:description" content="Premium poster design, digital experiences, and brand identity work from Kenya to the world." />
+    <meta
+      property="og:description"
+      content="Premium poster design, digital experiences, and brand identity work from Kenya to the world."
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://glimmerink.netlify.app" />
-    <meta property="og:image" content="/images/Glimmer-OG.jpg" />
+
+    <!-- Use absolute URL for best share + crawler reliability -->
+    <meta property="og:image" content="https://glimmerink.netlify.app/images/Glimmer-OG.jpg" />
     <meta property="og:site_name" content="GlimmerInk Creations" />
     <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="GlimmerInk Creations — Creative Studio" />
     <meta name="twitter:description" content="Designs that ink your imagination." />
-    <meta name="twitter:image" content="/images/Glimmer-OG.jpg" />
+    <meta name="twitter:image" content="https://glimmerink.netlify.app/images/Glimmer-OG.jpg" />
     <meta name="twitter:site" content="@GlimmerInk_" />
 
-    <!-- Security & Performance -->
-   <meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  script-src 
-    'self' 
-    https://cdn.jsdelivr.net 
-    https://api.emailjs.com 
-    'unsafe-inline' 
-    https://www.googletagmanager.com 
-    https://www.google-analytics.com;
-  style-src 
-    'self' 
-    'unsafe-inline' 
-    https://fonts.googleapis.com 
-    https://cdnjs.cloudflare.com;
-  font-src 
-    'self' 
-    https://fonts.gstatic.com 
-    https://cdnjs.cloudflare.com;
- img-src 
-  'self'
-  data:
-  blob:
-  https://glimmerink.netlify.app
-  https://cdn.jsdelivr.net
-  https://www.google-analytics.com;
-
-  connect-src 
-    'self' 
-    https://api.emailjs.com 
-    https://www.google-analytics.com 
-    https://region1.google-analytics.com;
-  upgrade-insecure-requests;
-">
-
+    <!-- Security & Performance (CSP) -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src
+          'self'
+          'unsafe-inline'
+          https://cdn.jsdelivr.net
+          https://api.emailjs.com
+          https://www.googletagmanager.com
+          https://www.google-analytics.com;
+        style-src
+          'self'
+          'unsafe-inline'
+          https://fonts.googleapis.com
+          https://cdnjs.cloudflare.com;
+        font-src
+          'self'
+          https://fonts.gstatic.com
+          https://cdnjs.cloudflare.com;
+        img-src
+          'self'
+          data:
+          blob:
+          https://glimmerink.netlify.app
+          https://cdn.jsdelivr.net
+          https://www.google-analytics.com;
+        connect-src
+          'self'
+          https://api.emailjs.com
+          https://www.google-analytics.com
+          https://region1.google-analytics.com;
+        worker-src
+          'self';
+        upgrade-insecure-requests;
+      "
+    />
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "GlimmerInk Creations",
-      "url": "https://glimmerink.netlify.app",
-      "logo": "https://glimmerink.netlify.app/favicon_io/android-chrome-512x512.png",
-      "sameAs": [
-        "https://twitter.com/GlimmerInk_",
-        "https://www.instagram.com/glimmerink.creations",
-        "https://www.linkedin.com/company/glimmerink"
-      ],
-      "description": "GlimmerInk Creations provides premium design services, specializing in posters, brand identities, and digital experiences.",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "nyamuehud@gmail.com",
-        "contactType": "Customer Service"
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "GlimmerInk Creations",
+        "url": "https://glimmerink.netlify.app",
+        "logo": "https://glimmerink.netlify.app/favicon_io/android-chrome-512x512.png",
+        "sameAs": [
+          "https://twitter.com/GlimmerInk_",
+          "https://www.instagram.com/glimmerink.creations",
+          "https://www.linkedin.com/company/glimmerink"
+        ],
+        "description": "GlimmerInk Creations provides premium design services, specializing in posters, brand identities, and digital experiences.",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "nyamuehud@gmail.com",
+          "contactType": "Customer Service"
+        }
       }
-    }
     </script>
 
     <title>GlimmerInk Creations</title>
@@ -108,17 +125,18 @@
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-7F9GC4PTFB');
+      gtag("js", new Date());
+      gtag("config", "G-7F9GC4PTFB");
     </script>
 
-    <!-- PWA: Service Worker Registration -->
+    <!-- PWA: Service Worker Registration (requires public/sw.js) -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service Worker registered:', reg))
-            .catch(err => console.error('Service Worker registration failed:', err));
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((reg) => console.log("Service Worker registered:", reg))
+            .catch((err) => console.error("Service Worker registration failed:", err));
         });
       }
     </script>

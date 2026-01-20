@@ -1,44 +1,86 @@
 // components/Home/ServicesGallery.jsx
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiChevronLeft, FiChevronRight, FiZoomIn, FiGrid, FiGithub, FiExternalLink, FiSmartphone } from "react-icons/fi";
+import {
+  FiX,
+  FiChevronLeft,
+  FiChevronRight,
+  FiZoomIn,
+  FiGrid,
+  FiGithub,
+  FiExternalLink,
+  FiSmartphone,
+} from "react-icons/fi";
 import websiteData from "@/data/website/websitedata";
 
-const ServicesGallery = () => {
+/**
+ * mode:
+ * - "home": shows only projects with showOnHome === true
+ * - "full": shows all categories/projects
+ */
+const ServicesGallery = ({ mode = "full" }) => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [lightboxProject, setLightboxProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [isMasonryView, setIsMasonryView] = useState(true);
   const [filteredCategories, setFilteredCategories] = useState([]);
-  
+
   const lightboxRef = useRef(null);
 
-  const developmentData = websiteData.development;
+  // Build dataset depending on mode (home vs full)
+  const developmentData = useMemo(() => {
+    const raw = websiteData?.development || { title: "", description: "", categories: [] };
+
+    if (mode !== "home") return raw;
+
+    const categories = (raw.categories || [])
+      .map((cat) => ({
+        ...cat,
+        projects: (cat.projects || []).filter((p) => p?.showOnHome === true),
+      }))
+      .filter((cat) => (cat.projects || []).length > 0);
+
+    return { ...raw, categories };
+  }, [mode]);
 
   // Filter categories based on search query
   useEffect(() => {
-    if (!searchQuery) {
-      setFilteredCategories(developmentData.categories);
+    const cats = developmentData.categories || [];
+
+    if (!searchQuery.trim()) {
+      setFilteredCategories(cats);
       return;
     }
-    
+
     const query = searchQuery.toLowerCase();
-    const filtered = developmentData.categories.filter(category => {
-      const categoryMatch = category.name.toLowerCase().includes(query) || 
-                           category.description.toLowerCase().includes(query);
-      const projectMatch = category.projects.some(project => 
-        project.title.toLowerCase().includes(query) || 
-        project.description.toLowerCase().includes(query) ||
-        project.technologies.some(tech => tech.toLowerCase().includes(query))
-      );
+
+    const filtered = cats.filter((category) => {
+      const name = (category.name || "").toLowerCase();
+      const desc = (category.description || "").toLowerCase();
+
+      const categoryMatch = name.includes(query) || desc.includes(query);
+
+      const projectMatch = (category.projects || []).some((project) => {
+        const t = (project.title || "").toLowerCase();
+        const d = (project.description || "").toLowerCase();
+        const techs = (project.technologies || []).some((tech) =>
+          String(tech).toLowerCase().includes(query)
+        );
+        return t.includes(query) || d.includes(query) || techs;
+      });
+
       return categoryMatch || projectMatch;
     });
-    
+
     setFilteredCategories(filtered);
   }, [searchQuery, developmentData]);
 
   const openLightbox = (project, imgIndex = 0) => {
+    if (!project) return;
+    const imgs = project.images || [];
+    if (imgs.length === 0) return;
+
     setLightboxProject(project);
     setCurrentImageIndex(imgIndex);
     document.body.style.overflow = "hidden";
@@ -50,53 +92,41 @@ const ServicesGallery = () => {
   };
 
   const nextImage = () => {
-    setCurrentImageIndex(prevIndex => 
-      (prevIndex + 1) % lightboxProject.images.length
-    );
+    if (!lightboxProject?.images?.length) return;
+    setCurrentImageIndex((prev) => (prev + 1) % lightboxProject.images.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex(prevIndex => 
-      (prevIndex - 1 + lightboxProject.images.length) % lightboxProject.images.length
+    if (!lightboxProject?.images?.length) return;
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + lightboxProject.images.length) % lightboxProject.images.length
     );
   };
 
-  // Handle keyboard navigation in lightbox
+  // Keyboard navigation for lightbox
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!lightboxProject) return;
-      
-      switch(e.key) {
-        case 'Escape':
-          closeLightbox();
-          break;
-        case 'ArrowRight':
-          nextImage();
-          break;
-        case 'ArrowLeft':
-          prevImage();
-          break;
-        default:
-          break;
-      }
+
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxProject]);
 
-  // Handle swipe gestures for mobile
   const handleSwipe = (swipeDirection) => {
     if (swipeDirection === "left") nextImage();
     if (swipeDirection === "right") prevImage();
   };
 
-  // Handle click outside lightbox to close
   const handleLightboxClick = (e) => {
-    if (e.target === lightboxRef.current) {
-      closeLightbox();
-    }
+    if (e.target === lightboxRef.current) closeLightbox();
   };
+
+  const hasData = (filteredCategories?.length || 0) > 0;
 
   return (
     <section className="py-20 bg-white dark:bg-background-dark">
@@ -109,8 +139,9 @@ const ServicesGallery = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            {developmentData.title}
+            {developmentData.title || "Portfolio"}
           </motion.h2>
+
           <motion.p
             className="text-lg text-text-light dark:text-text-dark opacity-80 max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
@@ -118,11 +149,11 @@ const ServicesGallery = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {developmentData.description}
+            {developmentData.description || "A selection of my work across web, systems, and apps."}
           </motion.p>
-          
-          {/* Search and View Controls */}
-          <motion.div 
+
+          {/* Search + view controls */}
+          <motion.div
             className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -138,84 +169,111 @@ const ServicesGallery = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               {searchQuery && (
-                <button 
+                <button
+                  type="button"
                   onClick={() => setSearchQuery("")}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                  aria-label="Clear search"
                 >
                   <FiX size={20} />
                 </button>
               )}
             </div>
-            
+
             {activeCategory && (
-              <button 
-                onClick={() => setIsMasonryView(!isMasonryView)}
+              <button
+                type="button"
+                onClick={() => setIsMasonryView((v) => !v)}
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl transition-colors ${
-                  isMasonryView 
-                    ? 'bg-primary hover:bg-primary-dark text-white' 
-                    : 'bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-light dark:text-text-dark'
+                  isMasonryView
+                    ? "bg-primary hover:bg-primary-dark text-white"
+                    : "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-light dark:text-text-dark"
                 }`}
               >
                 <FiGrid size={18} />
-                <span>{isMasonryView ? 'Grid View' : 'Masonry View'}</span>
+                <span>{isMasonryView ? "Grid View" : "Masonry View"}</span>
               </button>
             )}
           </motion.div>
         </div>
 
+        {/* Empty state (very important for mode="home") */}
+        {!hasData && !activeCategory && (
+          <div className="text-center py-12">
+            <div className="text-gray-600 dark:text-gray-400 text-lg">
+              {mode === "home"
+                ? "Featured work is being finalized. Check back soon — or view the full portfolio."
+                : "No projects found."}
+            </div>
+          </div>
+        )}
+
         {/* Category Grid */}
-        {!activeCategory && (
-          <motion.div 
+        {!activeCategory && hasData && (
+          <motion.div
             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            {filteredCategories.map((category, i) => (
-              <motion.div
-                key={category.id}
-                className="relative group overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl cursor-pointer bg-white dark:bg-gray-800"
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ 
-                  duration: 0.4, 
-                  delay: i * 0.05,
-                  type: "spring",
-                  stiffness: 300
-                }}
-                onClick={() => setActiveCategory(category)}
-              >
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={category.projects[0]?.images[0] || "/placeholder.webp"}
-                    alt={category.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                  <div className="p-4 w-full">
-                    <h3 className="text-white font-bold text-lg truncate">{category.name}</h3>
-                    <p className="text-gray-300 text-sm mt-1">{category.projects.length} projects</p>
+            {filteredCategories.map((category, i) => {
+              const cover =
+                category?.projects?.[0]?.images?.[0] || "/placeholder.webp";
+
+              return (
+                <motion.div
+                  key={category.id || category.name}
+                  className="relative group overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl cursor-pointer bg-white dark:bg-gray-800"
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{
+                    duration: 0.4,
+                    delay: i * 0.05,
+                    type: "spring",
+                    stiffness: 300,
+                  }}
+                  onClick={() => setActiveCategory(category)}
+                >
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src={cover}
+                      alt={category.name || "Category"}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
                   </div>
-                </div>
-                
-                <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full">
-                  {category.projects.length}
-                </div>
-                
-                <div className="p-3 bg-gray-900/80 backdrop-blur-sm text-center text-gray-200 font-medium">
-                  {category.name}
-                </div>
-              </motion.div>
-            ))}
-            
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                    <div className="p-4 w-full">
+                      <h3 className="text-white font-bold text-lg truncate">
+                        {category.name}
+                      </h3>
+                      <p className="text-gray-300 text-sm mt-1">
+                        {category.projects?.length || 0} projects
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {category.projects?.length || 0}
+                  </div>
+
+                  <div className="p-3 bg-gray-900/80 backdrop-blur-sm text-center text-gray-200 font-medium">
+                    {category.name}
+                  </div>
+                </motion.div>
+              );
+            })}
+
             {filteredCategories.length === 0 && (
               <div className="col-span-full text-center py-12">
-                <div className="text-gray-500 dark:text-gray-400 text-xl">No results found for "{searchQuery}"</div>
-                <button 
+                <div className="text-gray-500 dark:text-gray-400 text-xl">
+                  No results found for “{searchQuery}”
+                </div>
+                <button
+                  type="button"
                   onClick={() => setSearchQuery("")}
                   className="mt-4 px-6 py-3 bg-primary hover:bg-primary-dark rounded-xl text-white font-medium transition-colors"
                 >
@@ -228,7 +286,7 @@ const ServicesGallery = () => {
 
         {/* Expanded Category Gallery */}
         {activeCategory && (
-          <motion.div 
+          <motion.div
             className="mt-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -236,10 +294,14 @@ const ServicesGallery = () => {
           >
             <div className="flex flex-wrap justify-between items-center mb-8 gap-4">
               <button
+                type="button"
                 onClick={() => setActiveCategory(null)}
                 className="flex items-center gap-2 text-primary hover:text-primary-dark transition-colors group"
               >
-                <FiChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                <FiChevronLeft
+                  size={20}
+                  className="group-hover:-translate-x-1 transition-transform"
+                />
                 <span>All Categories</span>
               </button>
 
@@ -247,185 +309,215 @@ const ServicesGallery = () => {
                 <h3 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary-light text-transparent bg-clip-text">
                   {activeCategory.name}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 mt-2">{activeCategory.description}</p>
+                <p className="text-gray-600 dark:text-gray-400 mt-2">
+                  {activeCategory.description}
+                </p>
               </div>
-              
+
               <div className="text-gray-500 dark:text-gray-400">
-                {activeCategory.projects.length} projects
+                {activeCategory.projects?.length || 0} projects
               </div>
             </div>
 
             {isMasonryView ? (
-              // Masonry Layout
               <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
-                {activeCategory.projects.map((project) => (
-                  <motion.div
-                    key={project.id}
-                    className="mb-6 break-inside-avoid rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.4 }}
-                    whileHover={{ y: -5 }}
-                  >
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={project.images[0]}
-                        alt={project.title}
-                        className="w-full h-auto object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
-                        onClick={() => openLightbox(project)}
-                      />
-                      {project.images.length > 1 && (
-                        <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                          <FiZoomIn size={14} className="mr-1" />
-                          {project.images.length}
+                {(activeCategory.projects || []).map((project) => {
+                  const cover = project?.images?.[0] || "/placeholder.webp";
+                  return (
+                    <motion.div
+                      key={project.id || project.title}
+                      className="mb-6 break-inside-avoid rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.4 }}
+                      whileHover={{ y: -5 }}
+                    >
+                      <div className="relative overflow-hidden">
+                        <img
+                          src={cover}
+                          alt={project.title || "Project"}
+                          className="w-full h-auto object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
+                          onClick={() => openLightbox(project)}
+                          loading="lazy"
+                        />
+                        {(project.images?.length || 0) > 1 && (
+                          <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
+                            <FiZoomIn size={14} className="mr-1" />
+                            {project.images.length}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="p-5">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="text-xl font-bold text-text-light dark:text-text-dark">
+                            {project.title}
+                          </h4>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {project.year || ""}
+                          </span>
                         </div>
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="text-xl font-bold text-text-light dark:text-text-dark">{project.title}</h4>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">{project.year}</span>
+
+                        <p className="text-gray-600 dark:text-gray-400 mb-4">
+                          {project.description}
+                        </p>
+
+                        <div className="mb-4 flex flex-wrap gap-2">
+                          {(project.technologies || []).slice(0, 4).map((tech) => (
+                            <span
+                              key={tech}
+                              className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-primary dark:text-primary-light"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                          {(project.technologies || []).length > 4 && (
+                            <span className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-500 dark:text-gray-400">
+                              +{project.technologies.length - 4} more
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex gap-3 mt-4">
+                          {project.githubUrl && (
+                            <a
+                              href={project.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                            >
+                              <FiGithub size={16} />
+                              <span>Code</span>
+                            </a>
+                          )}
+                          {project.liveUrl && (
+                            <a
+                              href={project.liveUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                            >
+                              <FiExternalLink size={16} />
+                              <span>Live Demo</span>
+                            </a>
+                          )}
+                          {project.appStoreUrl && (
+                            <a
+                              href={project.appStoreUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                            >
+                              <FiSmartphone size={16} />
+                              <span>App Store</span>
+                            </a>
+                          )}
+                        </div>
                       </div>
-                      <p className="text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
-                      
-                      <div className="mb-4 flex flex-wrap gap-2">
-                        {project.technologies.slice(0, 4).map((tech) => (
-                          <span key={tech} className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-primary dark:text-primary-light">
-                            {tech}
-                          </span>
-                        ))}
-                        {project.technologies.length > 4 && (
-                          <span className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-500 dark:text-gray-400">
-                            +{project.technologies.length - 4} more
-                          </span>
-                        )}
-                      </div>
-                      
-                      <div className="flex gap-3 mt-4">
-                        {project.githubUrl && (
-                          <a 
-                            href={project.githubUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-                          >
-                            <FiGithub size={16} />
-                            <span>Code</span>
-                          </a>
-                        )}
-                        {project.liveUrl && (
-                          <a 
-                            href={project.liveUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-                          >
-                            <FiExternalLink size={16} />
-                            <span>Live Demo</span>
-                          </a>
-                        )}
-                        {project.appStoreUrl && (
-                          <a 
-                            href={project.appStoreUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-                          >
-                            <FiSmartphone size={16} />
-                            <span>App Store</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  );
+                })}
               </div>
             ) : (
-              // Grid Layout
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {activeCategory.projects.map((project) => (
-                  <motion.div
-                    key={project.id}
-                    className="rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.4 }}
-                    whileHover={{ y: -5 }}
-                  >
-                    <div className="relative aspect-video overflow-hidden">
-                      <img
-                        src={project.images[0]}
-                        alt={project.title}
-                        className="w-full h-full object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
-                        onClick={() => openLightbox(project)}
-                      />
-                      {project.images.length > 1 && (
-                        <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                          <FiZoomIn size={14} className="mr-1" />
-                          {project.images.length}
+                {(activeCategory.projects || []).map((project) => {
+                  const cover = project?.images?.[0] || "/placeholder.webp";
+                  return (
+                    <motion.div
+                      key={project.id || project.title}
+                      className="rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.4 }}
+                      whileHover={{ y: -5 }}
+                    >
+                      <div className="relative aspect-video overflow-hidden">
+                        <img
+                          src={cover}
+                          alt={project.title || "Project"}
+                          className="w-full h-full object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
+                          onClick={() => openLightbox(project)}
+                          loading="lazy"
+                        />
+                        {(project.images?.length || 0) > 1 && (
+                          <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
+                            <FiZoomIn size={14} className="mr-1" />
+                            {project.images.length}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="p-5">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="text-xl font-bold text-text-light dark:text-text-dark">
+                            {project.title}
+                          </h4>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {project.year || ""}
+                          </span>
                         </div>
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="text-xl font-bold text-text-light dark:text-text-dark">{project.title}</h4>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">{project.year}</span>
+
+                        <p className="text-gray-600 dark:text-gray-400 mb-4">
+                          {project.description}
+                        </p>
+
+                        <div className="mb-4 flex flex-wrap gap-2">
+                          {(project.technologies || []).slice(0, 4).map((tech) => (
+                            <span
+                              key={tech}
+                              className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-primary dark:text-primary-light"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                          {(project.technologies || []).length > 4 && (
+                            <span className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-500 dark:text-gray-400">
+                              +{project.technologies.length - 4} more
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex gap-3 mt-4">
+                          {project.githubUrl && (
+                            <a
+                              href={project.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                            >
+                              <FiGithub size={16} />
+                              <span>Code</span>
+                            </a>
+                          )}
+                          {project.liveUrl && (
+                            <a
+                              href={project.liveUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                            >
+                              <FiExternalLink size={16} />
+                              <span>Live Demo</span>
+                            </a>
+                          )}
+                          {project.appStoreUrl && (
+                            <a
+                              href={project.appStoreUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                            >
+                              <FiSmartphone size={16} />
+                              <span>App Store</span>
+                            </a>
+                          )}
+                        </div>
                       </div>
-                      <p className="text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
-                      
-                      <div className="mb-4 flex flex-wrap gap-2">
-                        {project.technologies.slice(0, 4).map((tech) => (
-                          <span key={tech} className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-primary dark:text-primary-light">
-                            {tech}
-                          </span>
-                        ))}
-                        {project.technologies.length > 4 && (
-                          <span className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-500 dark:text-gray-400">
-                            +{project.technologies.length - 4} more
-                          </span>
-                        )}
-                      </div>
-                      
-                      <div className="flex gap-3 mt-4">
-                        {project.githubUrl && (
-                          <a 
-                            href={project.githubUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-                          >
-                            <FiGithub size={16} />
-                            <span>Code</span>
-                          </a>
-                        )}
-                        {project.liveUrl && (
-                          <a 
-                            href={project.liveUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-                          >
-                            <FiExternalLink size={16} />
-                            <span>Live Demo</span>
-                          </a>
-                        )}
-                        {project.appStoreUrl && (
-                          <a 
-                            href={project.appStoreUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-                          >
-                            <FiSmartphone size={16} />
-                            <span>App Store</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  );
+                })}
               </div>
             )}
           </motion.div>
@@ -445,34 +537,44 @@ const ServicesGallery = () => {
             onClick={handleLightboxClick}
           >
             <button
+              type="button"
               className="absolute top-6 right-6 text-white hover:text-gray-300 z-10 p-2 bg-gray-800/50 rounded-full backdrop-blur-sm"
               onClick={closeLightbox}
+              aria-label="Close lightbox"
             >
               <FiX size={32} />
             </button>
 
             <button
+              type="button"
               className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10 p-3 bg-gray-800/50 rounded-full backdrop-blur-sm disabled:opacity-30"
               onClick={prevImage}
-              disabled={lightboxProject.images.length <= 1}
+              disabled={(lightboxProject.images?.length || 0) <= 1}
+              aria-label="Previous image"
             >
               <FiChevronLeft size={32} />
             </button>
 
             <button
+              type="button"
               className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10 p-3 bg-gray-800/50 rounded-full backdrop-blur-sm disabled:opacity-30"
               onClick={nextImage}
-              disabled={lightboxProject.images.length <= 1}
+              disabled={(lightboxProject.images?.length || 0) <= 1}
+              aria-label="Next image"
             >
               <FiChevronRight size={32} />
             </button>
 
             <div className="max-w-6xl w-full h-full flex flex-col">
               <div className="text-center mb-4">
-                <h3 className="text-2xl font-bold text-white">{lightboxProject.title}</h3>
-                <p className="text-gray-300">{currentImageIndex + 1} of {lightboxProject.images.length}</p>
+                <h3 className="text-2xl font-bold text-white">
+                  {lightboxProject.title}
+                </h3>
+                <p className="text-gray-300">
+                  {currentImageIndex + 1} of {lightboxProject.images.length}
+                </p>
               </div>
-              
+
               <motion.div
                 className="flex-1 flex items-center justify-center"
                 key={currentImageIndex}
@@ -491,28 +593,29 @@ const ServicesGallery = () => {
                   transition={{ duration: 0.3 }}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
-                  onDragEnd={(e, { offset, velocity }) => {
+                  onDragEnd={(e, { offset }) => {
                     if (offset.x > 100) handleSwipe("right");
                     if (offset.x < -100) handleSwipe("left");
                   }}
                 />
               </motion.div>
-              
+
               <div className="mt-4 flex justify-center gap-2">
                 {lightboxProject.images.map((_, idx) => (
                   <button
                     key={idx}
+                    type="button"
                     onClick={() => setCurrentImageIndex(idx)}
                     className={`w-3 h-3 rounded-full transition-colors ${
-                      idx === currentImageIndex 
-                        ? 'bg-primary' 
-                        : 'bg-gray-600 hover:bg-gray-500'
+                      idx === currentImageIndex
+                        ? "bg-primary"
+                        : "bg-gray-600 hover:bg-gray-500"
                     }`}
                     aria-label={`Go to image ${idx + 1}`}
                   />
                 ))}
               </div>
-              
+
               <div className="mt-6 text-center text-gray-400 max-w-2xl mx-auto">
                 {lightboxProject.description}
               </div>

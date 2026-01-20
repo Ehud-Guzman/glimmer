@@ -1,32 +1,38 @@
 import { motion } from "framer-motion";
+import SafeImage from "@/components/ui/SafeImage";
 
 const ContactHero = () => {
   return (
     <section className="relative pt-24 pb-16 px-6 max-w-7xl mx-auto overflow-hidden">
       {/* Background image with overlay */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         {/* Background image */}
         <div className="absolute inset-0">
-          <img 
+          <SafeImage
             src="/images/background.png"
-            alt="Background"
+            alt=""
             className="w-full h-full object-cover opacity-20 dark:opacity-20"
           />
-          {/* Gradient overlay */}
-        
+
+          {/* If you ever want a gradient overlay, uncomment and tune:
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-light/60 dark:to-background-dark/60" />
+          */}
         </div>
 
         {/* Blur elements */}
         <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-primary/10 dark:bg-primary/20 blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-primary/5 dark:bg-primary/10 blur-3xl" />
-        
+
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 opacity-10 dark:opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(to right, #8882 1px, transparent 1px),
-                             linear-gradient(to bottom, #8882 1px, transparent 1px)`,
-            backgroundSize: '50px 50px',
-          }} />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `linear-gradient(to right, #8882 1px, transparent 1px),
+                               linear-gradient(to bottom, #8882 1px, transparent 1px)`,
+              backgroundSize: "50px 50px",
+            }}
+          />
         </div>
       </div>
 
@@ -49,28 +55,28 @@ const ContactHero = () => {
             className="w-2 h-2 rounded-full bg-primary dark:bg-primary-light"
           />
           <span className="text-sm font-medium text-primary dark:text-primary-light">
-            Let's Connect
+            Let&apos;s Connect
           </span>
         </motion.div>
 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-display leading-tight">
-          Let's Create
+          Let&apos;s Create
           <span className="block text-primary dark:text-primary-light mt-2">
             Together
           </span>
         </h1>
-        
+
         <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-2xl mx-auto">
-          From concept to deployment, we transform your ideas into exceptional 
-          digital experiences. Share your vision and let's build something amazing.
+          From concept to deployment, we transform your ideas into exceptional
+          digital experiences. Share your vision and let&apos;s build something amazing.
         </p>
 
-        {/* Quick stats */}
+        {/* Quick stats (trust-safe) */}
         <div className="flex flex-wrap justify-center gap-6 mt-10 mb-8">
           {[
             { value: "24h", label: "Response Time" },
-            { value: "50+", label: "Projects" },
-            { value: "100%", label: "Satisfaction" },
+            { value: "Client-first", label: "Build Approach" },
+            { value: "Quality", label: "Delivery Standard" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -88,8 +94,6 @@ const ContactHero = () => {
             </motion.div>
           ))}
         </div>
-
-      
       </motion.div>
 
       {/* Floating elements */}
@@ -97,16 +101,22 @@ const ContactHero = () => {
         animate={{ y: [0, -20, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-1/4 left-10 w-12 h-12 opacity-20 dark:opacity-30 hidden md:block"
+        aria-hidden="true"
       >
-        <div className="text-3xl font-mono text-primary dark:text-primary-light">{'</>'}</div>
+        <div className="text-3xl font-mono text-primary dark:text-primary-light">
+          {"</>"}
+        </div>
       </motion.div>
-      
+
       <motion.div
         animate={{ y: [0, -30, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
         className="absolute bottom-1/4 right-10 w-12 h-12 opacity-20 dark:opacity-30 hidden md:block"
+        aria-hidden="true"
       >
-        <div className="text-3xl font-mono text-primary dark:text-primary-light">{'{}'}</div>
+        <div className="text-3xl font-mono text-primary dark:text-primary-light">
+          {"{}"}
+        </div>
       </motion.div>
     </section>
   );

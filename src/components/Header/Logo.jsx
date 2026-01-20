@@ -1,12 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function Logo() {
   return (
-    <Link to="/" className="flex items-center gap-3">
+    <Link
+      to="/"
+      aria-label="GlimmerInk Creations home"
+      className="flex items-center"
+    >
       <img
-        src="/images/GlimmerInklogo1.webp"
-        alt="GlimmerInk Creations Logo"
-        className="h-16 rounded-lg object-contain" // ✅ bigger logo
+        src="/images/logo-blue.png"
+        alt="GlimmerInk Creations logo"
+        loading="eager"
+        className="
+          h-11 sm:h-12 md:h-14 
+          w-auto object-contain
+        "
       />
     </Link>
   );

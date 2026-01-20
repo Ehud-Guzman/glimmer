@@ -1,8 +1,14 @@
 import { motion } from "framer-motion";
 import { FiExternalLink } from "react-icons/fi";
+import SafeImage from "@/components/ui/SafeImage";
+
+const isValidExternalUrl = (url) => typeof url === "string" && /^https?:\/\//i.test(url);
 
 const FeaturedProject = ({ project, onViewDetails }) => {
   if (!project) return null;
+
+  const hasLive = isValidExternalUrl(project.url);
+  const imageSrc = project.fullImage || project.thumbnail;
 
   return (
     <section className="py-16 px-4 md:px-6 bg-background-light dark:bg-background-dark">
@@ -20,56 +26,67 @@ const FeaturedProject = ({ project, onViewDetails }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="p-8 lg:p-10">
               <div className="flex items-center gap-2 mb-4">
-                <span className="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light rounded-full text-sm font-medium">
-                  {project.type}
-                </span>
-                <span className="text-sm text-text-muted dark:text-gray-400">{project.year}</span>
+                {!!project.type && (
+                  <span className="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light rounded-full text-sm font-medium">
+                    {project.type}
+                  </span>
+                )}
+                {!!project.year && (
+                  <span className="text-sm text-text-muted dark:text-gray-400">{project.year}</span>
+                )}
               </div>
-              
+
               <h3 className="text-2xl md:text-3xl font-bold mb-4">{project.title}</h3>
-              
-              <p className="text-text-muted dark:text-gray-300 mb-6 leading-relaxed">
-                {project.description}
-              </p>
-              
-              <div className="mb-8">
-                <h4 className="font-semibold mb-3">Technology Stack</h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.stack.slice(0, 4).map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1.5 bg-background-light dark:bg-gray-700 rounded-lg text-sm"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+
+              {!!project.description && (
+                <p className="text-text-muted dark:text-gray-300 mb-6 leading-relaxed">
+                  {project.description}
+                </p>
+              )}
+
+              {!!project.stack?.length && (
+                <div className="mb-8">
+                  <h4 className="font-semibold mb-3">Technology Stack</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.stack.slice(0, 4).map((tech, idx) => (
+                      <span
+                        key={`${tech}-${idx}`}
+                        className="px-3 py-1.5 bg-background-light dark:bg-gray-700 rounded-lg text-sm"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex gap-4">
+              )}
+
+              <div className="flex gap-4 flex-wrap">
                 <motion.button
-                  onClick={onViewDetails}
+                  onClick={() => onViewDetails?.(project)}
                   className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors font-medium"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   View Full Case Study
                 </motion.button>
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 border border-border-light dark:border-gray-600 rounded-lg hover:bg-background-light dark:hover:bg-gray-700 transition-colors font-medium flex items-center gap-2"
-                >
-                  Live Demo <FiExternalLink />
-                </a>
+
+                {hasLive && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 border border-border-light dark:border-gray-600 rounded-lg hover:bg-background-light dark:hover:bg-gray-700 transition-colors font-medium flex items-center gap-2"
+                  >
+                    Live Demo <FiExternalLink />
+                  </a>
+                )}
               </div>
             </div>
-            
+
             <div className="bg-primary/5 dark:bg-primary/10 flex items-center justify-center p-8 lg:p-10">
-              <img
-                src={project.fullImage || project.thumbnail}
-                alt={project.title}
+              <SafeImage
+                src={imageSrc}
+                alt={project.title || "Featured project image"}
                 className="max-w-full max-h-[400px] object-contain rounded-lg"
               />
             </div>

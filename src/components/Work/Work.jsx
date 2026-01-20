@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+
 import WorkHero from "./WorkHero";
 import ProjectShowcase from "./ProjectShowcase";
 import ProjectFilters from "./ProjectFilters";
@@ -12,45 +13,68 @@ import ContactOptions from "./ContactOptions";
 import CTASection from "./CTASection";
 import ProjectModal from "./ProjectModal";
 
-const WorkPage = ({ projects }) => {
+const norm = (v) => String(v || "").toLowerCase();
+const safeArr = (v) => (Array.isArray(v) ? v : []);
+
+const WorkPage = ({ projects = [] }) => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleProjects, setVisibleProjects] = useState(6);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Filter projects
-  const filteredProjects = projects
-    .filter((item) => activeFilter === "all" || item.category === activeFilter)
-    .filter(
-      (item) =>
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.stack.some((tech) =>
-          tech.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-    )
-    .slice(0, visibleProjects);
+  // Reset pagination whenever the user changes filter or search
+  useEffect(() => {
+    setVisibleProjects(6);
+  }, [activeFilter, searchQuery]);
 
-  const loadMore = () => {
-    setVisibleProjects((prev) => prev + 6);
-  };
+  const featured = useMemo(() => {
+    const explicit = projects.find((p) => p?.featured);
+    return explicit || projects[0] || null;
+  }, [projects]);
+
+  const showcaseProjects = useMemo(() => {
+    // Put featured first (if any), then fill the remaining slots
+    const rest = projects.filter((p) => p && p !== featured);
+    return [featured, ...rest].filter(Boolean).slice(0, 3);
+  }, [projects, featured]);
+
+  const filteredProjects = useMemo(() => {
+    const q = norm(searchQuery);
+
+    return projects
+      .filter((p) => (activeFilter === "all" ? true : p?.category === activeFilter))
+      .filter((p) => {
+        if (!q) return true;
+
+        const title = norm(p?.title);
+        const desc = norm(p?.description);
+        const stackHit = safeArr(p?.stack).some((t) => norm(t).includes(q));
+
+        return title.includes(q) || desc.includes(q) || stackHit;
+      })
+      .slice(0, visibleProjects);
+  }, [projects, activeFilter, searchQuery, visibleProjects]);
+
+  const loadMore = () => setVisibleProjects((prev) => prev + 6);
 
   const handleProjectSelect = (project) => {
+    if (!project) return;
     setSelectedProject(project);
     setIsModalOpen(true);
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProject(null);
+  };
+
   return (
     <div className="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark min-h-screen">
-      {/* Hero Section */}
       <WorkHero />
 
       {/* Featured Projects Showcase */}
-      <ProjectShowcase 
-        projects={projects.slice(0, 3)} 
-        onProjectSelect={handleProjectSelect} 
-      />
+      <ProjectShowcase projects={showcaseProjects} onProjectSelect={handleProjectSelect} />
 
       {/* All Projects Section */}
       <section className="py-16 px-4 md:px-6 max-w-7xl mx-auto">
@@ -59,7 +83,7 @@ const WorkPage = ({ projects }) => {
             Explore Our Projects
           </h2>
           <p className="text-lg text-text-muted max-w-2xl mx-auto">
-            Browse through our collection of web applications, mobile apps, and business systems
+            Browse through our collection of web applications and business systems
           </p>
         </div>
 
@@ -70,18 +94,15 @@ const WorkPage = ({ projects }) => {
           setSearchQuery={setSearchQuery}
         />
 
-        <ProjectGrid 
-          projects={filteredProjects}
-          onProjectSelect={handleProjectSelect}
-        />
+        <ProjectGrid projects={filteredProjects} onProjectSelect={handleProjectSelect} />
 
         {visibleProjects < projects.length && (
           <div className="text-center mt-12">
             <motion.button
               onClick={loadMore}
               className="px-8 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors shadow-md"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
             >
               Load More Projects
             </motion.button>
@@ -89,34 +110,21 @@ const WorkPage = ({ projects }) => {
         )}
       </section>
 
-      {/* Services Overview */}
       <ServicesOverview />
-
-      {/* Development Process */}
       <DevelopmentProcess />
-
-      {/* Tech Stack */}
       <TechStackSection />
 
       {/* Featured Case Study */}
-      <FeaturedProject 
-        project={projects[0]} 
-        onViewDetails={() => handleProjectSelect(projects[0])} 
-      />
+      {featured && (
+        <FeaturedProject project={featured} onViewDetails={() => handleProjectSelect(featured)} />
+      )}
 
-      {/* Contact CTA */}
       <ContactOptions />
-
-      {/* Final CTA */}
       <CTASection />
 
       {/* Project Modal */}
       {isModalOpen && selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
+        <ProjectModal project={selectedProject} isOpen={isModalOpen} onClose={closeModal} />
       )}
     </div>
   );

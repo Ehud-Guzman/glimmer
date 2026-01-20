@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DesktopNav from "./DesktopNav";
 import MobileMenu from "./MobileMenu";
 import Logo from "./Logo";
 
-export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function Header({ isMenuOpen, setIsMenuOpen }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Light by default, respect saved preference
@@ -28,16 +27,16 @@ export default function Header() {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => (prev === "dark" ? "light" : "dark"));
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
   /* ------------------------------
      Close mobile menu on navigation
+     (App owns state; Header just updates it)
   ------------------------------ */
   useEffect(() => {
     setIsMenuOpen(false);
-    document.body.style.overflow = "";
-  }, [location]);
+  }, [location, setIsMenuOpen]);
 
   /* ------------------------------
      Scroll detection
@@ -48,11 +47,8 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMenu = () => {
-    const open = !isMenuOpen;
-    setIsMenuOpen(open);
-    document.body.style.overflow = open ? "hidden" : "";
-  };
+  const toggleMenu = () => setIsMenuOpen((open) => !open);
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <header
@@ -80,15 +76,26 @@ export default function Header() {
         <button
           onClick={toggleMenu}
           aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
           className="md:hidden p-2 rounded-lg transition-colors duration-200
                      text-gray-600 hover:text-gray-900 hover:bg-gray-100
                      dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {isMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             )}
           </svg>
         </button>
@@ -98,6 +105,7 @@ export default function Header() {
       <MobileMenu
         isOpen={isMenuOpen}
         toggleMenu={toggleMenu}
+        closeMenu={closeMenu}
         theme={theme}
         toggleTheme={toggleTheme}
       />
