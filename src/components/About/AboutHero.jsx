@@ -3,8 +3,8 @@ import { Sparkles, Target, Users, Award } from "lucide-react";
 
 const AboutHero = () => {
   const stats = [
-    { icon: Target, value: "15+", label: "Projects Completed" },
-    { icon: Users, value: "100%", label: "Client Satisfaction" },
+    { icon: Target, value: "10+", label: "Projects Completed" },
+   
     { icon: Award, value: "24/7", label: "Support" },
     { icon: Sparkles, value: "2025", label: "Founded" },
   ];
@@ -130,10 +130,7 @@ const AboutHero = () => {
               className="absolute -bottom-4 -left-4 p-4 bg-white dark:bg-gray-800 rounded-xl 
                         border border-gray-200 dark:border-gray-700 shadow-lg"
             >
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary dark:text-primary-light">100%</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">Satisfaction</div>
-              </div>
+           
             </motion.div>
           </div>
         </motion.div>

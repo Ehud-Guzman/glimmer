@@ -15,36 +15,24 @@ const HistoryTimeline = () => {
       year: "2025",
       quarter: "Q3",
       title: "First Major Project",
-      description: "Successfully delivered a complex SaaS platform for a fintech startup.",
+      description: "Successfully delivered an online platform for a startup.",
       icon: Code,
     },
-    {
-      year: "2025",
-      quarter: "Q4",
-      title: "Team Expansion",
-      description: "Expanded to a full-stack development team with specialized expertise.",
-      icon: Users,
-    },
+   
     {
       year: "2026",
       quarter: "Q1",
-      title: "Mobile Division",
-      description: "Launched mobile app development services with React Native expertise.",
+      title: "System Development Launch",
+      description: "Launched School Management System for educational institutions.",
       icon: Rocket,
     },
-    {
-      year: "2026",
-      quarter: "Q3",
-      title: "Quality Recognition",
-      description: "Achieved 100% client satisfaction rating across all projects.",
-      icon: Star,
-      highlight: true,
-    },
+    
+   
     {
       year: "Present",
       quarter: "Now",
       title: "Growth Phase",
-      description: "Helping 30+ businesses build, optimize, and scale their digital presence.",
+      description: "Helping businesses and institutions build, optimize, and scale their digital presence.",
       icon: TrendingUp,
     },
   ];
