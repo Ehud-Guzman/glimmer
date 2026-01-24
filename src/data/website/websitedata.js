@@ -5,13 +5,16 @@ const websiteData = {
     description:
       "Explore my technical projects across web development, systems, and applications",
     categories: [
+      // -------------------------
+      // ✅ CATEGORY: Web Development
+      // -------------------------
       {
         id: "web-dev",
         name: "Web Development",
         description: "Full-stack web applications and sites",
         projects: [
           {
-            id: "Grains Export/Import Website",
+            id: "grains-export-import",
             title: "Grains Export/Import Website",
             status: "live",
             showOnHome: true,
@@ -122,6 +125,50 @@ const websiteData = {
         ],
       },
 
+      // -------------------------
+      // ✅ CATEGORY: Systems / Dashboards (FIXED)
+      // -------------------------
+      {
+        id: "systems",
+        name: "Systems & Dashboards",
+        description: "Dashboards, management systems, and platform UIs",
+        projects: [
+          {
+            id: "sms-dashboard",
+            title: "School Management System Dashboard",
+            status: "demo",
+            showOnHome: true,
+            description:
+              "School dashboard UI for performance and staff/student views (frontend build).",
+            year: "2025",
+            client: "Educational Institution",
+            technologies: [
+              "React",
+              "Tailwind CSS",
+              "Vite",
+              "PostgreSQL",
+              "Prisma",
+            ],
+            liveUrl: "https://granitesms.netlify.app/",
+            images: [
+              "/images/systems/logs.png",
+              "/images/systems/systemadmin.png",
+              "/images/systems/teacher-dashboard.png",
+            ],
+            features: [
+              "Overview of school performance metrics",
+              "Real-time synchronization",
+              "Filterable student and staff views",
+              "Logs and activity tracking",
+              "Progress tracking",
+            ],
+          },
+        ],
+      },
+
+      // -------------------------
+      // ✅ CATEGORY: System Development
+      // -------------------------
       {
         id: "system-dev",
         name: "System Development",
@@ -157,13 +204,7 @@ const websiteData = {
               "ETL pipeline for processing large datasets with real-time analytics and reporting",
             year: "2023",
             client: "Data Analytics Company",
-            technologies: [
-              "Python",
-              "Apache Kafka",
-              "PostgreSQL",
-              "Redis",
-              "Docker",
-            ],
+            technologies: ["Python", "Apache Kafka", "PostgreSQL", "Redis", "Docker"],
             githubUrl: "https://github.com/username/data-pipeline",
             images: [
               "/projects/data-pipeline/flow.jpg",
@@ -180,6 +221,9 @@ const websiteData = {
         ],
       },
 
+      // -------------------------
+      // ✅ CATEGORY: Mobile Applications
+      // -------------------------
       {
         id: "mobile-apps",
         name: "Mobile Applications",
@@ -215,6 +259,9 @@ const websiteData = {
         ],
       },
 
+      // -------------------------
+      // ✅ CATEGORY: DevOps & Infrastructure
+      // -------------------------
       {
         id: "devops",
         name: "DevOps & Infrastructure",
@@ -229,7 +276,13 @@ const websiteData = {
               "Automated deployment pipeline with testing, building, and deployment to cloud infrastructure",
             year: "2024",
             client: "Multiple Clients",
-            technologies: ["GitHub Actions", "Docker", "AWS", "Terraform", "Kubernetes"],
+            technologies: [
+              "GitHub Actions",
+              "Docker",
+              "AWS",
+              "Terraform",
+              "Kubernetes",
+            ],
             githubUrl: "https://github.com/username/ci-cd-pipeline",
             images: [
               "/projects/devops/pipeline.jpg",

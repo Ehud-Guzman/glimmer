@@ -8,9 +8,9 @@ export const developmentProjects = [
   title: "School Management System",
   description:
     "Multi-tenant school platform for student records, attendance, fees, exams/results, and automated reporting.",
-  thumbnail: "/images/systems/attendance-modal.png",
-  fullImage: "/images/systems/exam-modal.png",
-  url: "", // keep empty until real live link (prevents fake demo button)
+  thumbnail: "/images/systems/systemadmin.png",
+  fullImage: "/images/systems/teacher-dashboard.png",
+  url: "https://granitesms.netlify.app/app", 
   stack: ["React", "Vite", "Tailwind CSS", "Node.js", "PostgreSQL", "Prisma"],
   features: [
     "Multi-tenant (school isolation)",
