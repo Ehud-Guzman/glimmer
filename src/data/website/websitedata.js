@@ -163,6 +163,44 @@ const websiteData = {
               "Progress tracking",
             ],
           },
+{
+  id: "customer-feedback-system",
+  title: "Customer Feedback System (QR Surveys + Analytics)",
+  status: "live",
+  showOnHome: true,
+  description:
+    "Multi-tenant customer feedback platform for shops and clinics. QR-based public surveys, staff-assisted submissions, role-based dashboards, and actionable analytics.",
+  year: "2026",
+  client: "Internal Product / SaaS Build",
+  technologies: [
+    "React",
+    "Vite",
+    "Node.js",
+    "Express",
+    "Prisma",
+    "PostgreSQL",
+    "Netlify",
+    "Render",
+  ],
+  liveUrl: "https://custfeed.netlify.app",
+  // githubUrl: "https://github.com/yourusername/customer-feedback", // optional
+  images: [
+    "/images/systems/custfeed/login.png",
+    "/images/systems/custfeed/feedback1.png",
+    "/images/systems/custfeed/qr.png",
+  ],
+  features: [
+    "QR public survey link flow (no login required)",
+    "Role-based authentication (System Admin / Org Admin / Staff)",
+    "Multi-tenant org context with X-Org-Id support",
+    "Survey creation, submissions, and analytics dashboards",
+    "Staff-assisted feedback submissions",
+    "Production deployment: Netlify (frontend) + Render (API)",
+    "Health endpoint and hardened CORS config",
+  ],
+}
+
+
         ],
       },
 
