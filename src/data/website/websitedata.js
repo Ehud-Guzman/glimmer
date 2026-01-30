@@ -93,6 +93,52 @@ const websiteData = {
           },
 
           {
+  id: "sunshine-schools",
+  title: "Sunshine Schools",
+  description:
+    "Modern school website and dashboard UI designed to showcase academic performance, staff structure, and student information through a clean, professional education-focused interface.",
+  thumbnail: "/images/websites/sunshine.webp",
+  fullImage: "/images/websites/sunshine.webp",
+  url: "https://sunshineshools.netlify.app/",
+  stack: ["React", "Tailwind CSS", "Vite"],
+  features: [
+    "Clean academic dashboard layout",
+    "Student and teacher information views",
+    "Performance overview sections",
+    "Responsive design for desktop and mobile",
+    "Education-focused UI and navigation structure"
+  ],
+  category: "web",
+  year: "2025",
+  type: "Education Website & Dashboard UI",
+  status: "demo",
+},
+
+
+{
+  id: "glimmerhope-hospital",
+  title: "GlimmerHope Hospital",
+  description:
+    "Concept healthcare website and system UI showcasing patient journeys, appointment workflows, and hospital operations through a clean, professional medical interface.",
+  thumbnail: "/images/websites/glimmerhope1.webp",
+  fullImage: "/images/websites/glimmerhope1.webp",
+  url: "https://glimmerhope.netlify.app/",
+  stack: ["React", "TypeScript", "GraphQL", "PostgreSQL"],
+  features: [
+    "Patient journey and workflow UI concepts",
+    "Appointment scheduling interface design",
+    "Role-based access UI simulation",
+    "Clean medical-grade layout and typography",
+    "System-focused information architecture"
+  ],
+  category: "system",
+  year: "2024",
+  type: "Healthcare System UI (Concept)",
+  status: "demo",
+},
+
+
+          {
             id: "real-time-chat",
             title: "Real-time Chat Application",
             status: "wip",
