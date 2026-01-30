@@ -91,52 +91,55 @@ const websiteData = {
               "Booking inquiry flow (fast conversion path)",
             ],
           },
+          {
+            id: "sunshine-schools",
+            title: "Sunshine Schools",
+            status: "demo",
+            showOnHome: true,
+            description:
+              "Modern school website and dashboard UI concept showcasing performance, staff structure, and student views with a clean education-focused interface.",
+            year: "2025",
+            client: "Education (Concept Build)",
+            technologies: ["React", "Tailwind CSS", "Vite"],
+            liveUrl: "https://sunshineshools.netlify.app/",
+            images: [
+              "/images/websites/sunshine.webp",
+              "/images/websites/sunshine.webp",
+              "/images/websites/sunshine.webp",
+            ],
+            features: [
+              "Clean academic dashboard layout",
+              "Student and teacher views (UI)",
+              "Performance overview sections",
+              "Responsive layout",
+              "Education-focused navigation structure",
+            ],
+          },
 
           {
-  id: "sunshine-schools",
-  title: "Sunshine Schools",
-  description:
-    "Modern school website and dashboard UI designed to showcase academic performance, staff structure, and student information through a clean, professional education-focused interface.",
-  thumbnail: "/images/websites/sunshine.webp",
-  fullImage: "/images/websites/sunshine.webp",
-  url: "https://sunshineshools.netlify.app/",
-  stack: ["React", "Tailwind CSS", "Vite"],
-  features: [
-    "Clean academic dashboard layout",
-    "Student and teacher information views",
-    "Performance overview sections",
-    "Responsive design for desktop and mobile",
-    "Education-focused UI and navigation structure"
-  ],
-  category: "web",
-  year: "2025",
-  type: "Education Website & Dashboard UI",
-  status: "demo",
-},
-
-
-{
-  id: "glimmerhope-hospital",
-  title: "GlimmerHope Hospital",
-  description:
-    "Concept healthcare website and system UI showcasing patient journeys, appointment workflows, and hospital operations through a clean, professional medical interface.",
-  thumbnail: "/images/websites/glimmerhope1.webp",
-  fullImage: "/images/websites/glimmerhope1.webp",
-  url: "https://glimmerhope.netlify.app/",
-  stack: ["React", "TypeScript", "GraphQL", "PostgreSQL"],
-  features: [
-    "Patient journey and workflow UI concepts",
-    "Appointment scheduling interface design",
-    "Role-based access UI simulation",
-    "Clean medical-grade layout and typography",
-    "System-focused information architecture"
-  ],
-  category: "system",
-  year: "2024",
-  type: "Healthcare System UI (Concept)",
-  status: "demo",
-},
-
+            id: "glimmerhope-hospital",
+            title: "GlimmerHope Hospital",
+            status: "demo",
+            showOnHome: true,
+            description:
+              "Concept healthcare website + system UI showcasing patient journeys and appointment workflows through a clean, professional medical interface.",
+            year: "2024",
+            client: "Healthcare (Concept Build)",
+            technologies: ["React", "TypeScript", "GraphQL", "PostgreSQL"],
+            liveUrl: "https://glimmerhope.netlify.app/",
+            images: [
+              "/images/websites/glimmerhope1.webp",
+              "/images/websites/glimmerhope1.webp",
+              "/images/websites/glimmerhope1.webp",
+            ],
+            features: [
+              "Patient journey UI concept",
+              "Appointment scheduling UI",
+              "Role-based access UI simulation",
+              "Clean medical-grade layout",
+              "System-focused information architecture",
+            ],
+          },
 
           {
             id: "real-time-chat",
