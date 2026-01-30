@@ -66,6 +66,33 @@ const websiteData = {
           },
 
           {
+            id: "luxe-garden-venue",
+            title: "Luxe Garden — Garden Venue Website",
+            status: "live",
+            showOnHome: true,
+            description:
+              "Premium garden venue website for weddings, events, brunch/lunch dining, kids experiences, and photoshoots — built with a high-end, conversion-focused layout and modern UI.",
+            year: "2026",
+            client: "Luxe Garden (Venue / Events)",
+            technologies: ["React", "Vite", "Tailwind CSS", "Netlify"],
+            liveUrl: "https://luxegarden.netlify.app/",
+            githubUrl: "https://github.com/YOUR-USERNAME/luxe-garden-venue",
+            images: [
+              "/images/websites/luxestay/activities.png",
+              "/images/websites/luxestay/dining.png",
+              "/images/websites/luxestay/packages.png",
+              "/images/websites/luxestay/gallery.png",
+            ],
+            features: [
+              "Premium hero sections + activity-focused layout",
+              "Events, Dining, Activities, Packages, Gallery & Bookings pages",
+              "Mobile-first responsive design",
+              "SEO-ready meta + Open Graph sharing image",
+              "Booking inquiry flow (fast conversion path)",
+            ],
+          },
+
+          {
             id: "real-time-chat",
             title: "Real-time Chat Application",
             status: "wip",
@@ -163,44 +190,42 @@ const websiteData = {
               "Progress tracking",
             ],
           },
-{
-  id: "customer-feedback-system",
-  title: "Customer Feedback System (QR Surveys + Analytics)",
-  status: "live",
-  showOnHome: true,
-  description:
-    "Multi-tenant customer feedback platform for shops and clinics. QR-based public surveys, staff-assisted submissions, role-based dashboards, and actionable analytics.",
-  year: "2026",
-  client: "Internal Product / SaaS Build",
-  technologies: [
-    "React",
-    "Vite",
-    "Node.js",
-    "Express",
-    "Prisma",
-    "PostgreSQL",
-    "Netlify",
-    "Render",
-  ],
-  liveUrl: "https://custfeed.netlify.app",
-  // githubUrl: "https://github.com/yourusername/customer-feedback", // optional
-  images: [
-    "/images/systems/custfeed/login.png",
-    "/images/systems/custfeed/feedback1.png",
-    "/images/systems/custfeed/qr.png",
-  ],
-  features: [
-    "QR public survey link flow (no login required)",
-    "Role-based authentication (System Admin / Org Admin / Staff)",
-    "Multi-tenant org context with X-Org-Id support",
-    "Survey creation, submissions, and analytics dashboards",
-    "Staff-assisted feedback submissions",
-    "Production deployment: Netlify (frontend) + Render (API)",
-    "Health endpoint and hardened CORS config",
-  ],
-}
-
-
+          {
+            id: "customer-feedback-system",
+            title: "Customer Feedback System (QR Surveys + Analytics)",
+            status: "live",
+            showOnHome: true,
+            description:
+              "Multi-tenant customer feedback platform for shops and clinics. QR-based public surveys, staff-assisted submissions, role-based dashboards, and actionable analytics.",
+            year: "2026",
+            client: "Internal Product / SaaS Build",
+            technologies: [
+              "React",
+              "Vite",
+              "Node.js",
+              "Express",
+              "Prisma",
+              "PostgreSQL",
+              "Netlify",
+              "Render",
+            ],
+            liveUrl: "https://custfeed.netlify.app",
+            // githubUrl: "https://github.com/yourusername/customer-feedback", // optional
+            images: [
+              "/images/systems/custfeed/login.png",
+              "/images/systems/custfeed/feedback1.png",
+              "/images/systems/custfeed/qr.png",
+            ],
+            features: [
+              "QR public survey link flow (no login required)",
+              "Role-based authentication (System Admin / Org Admin / Staff)",
+              "Multi-tenant org context with X-Org-Id support",
+              "Survey creation, submissions, and analytics dashboards",
+              "Staff-assisted feedback submissions",
+              "Production deployment: Netlify (frontend) + Render (API)",
+              "Health endpoint and hardened CORS config",
+            ],
+          },
         ],
       },
 
@@ -223,7 +248,10 @@ const websiteData = {
             client: "Financial Institution",
             technologies: ["Node.js", "Docker", "Kubernetes", "Redis", "Nginx"],
             githubUrl: "https://github.com/username/api-gateway",
-            images: ["/projects/api/architecture.jpg", "/projects/api/dashboard.jpg"],
+            images: [
+              "/projects/api/architecture.jpg",
+              "/projects/api/dashboard.jpg",
+            ],
             features: [
               "Request routing and load balancing",
               "Authentication and authorization",
@@ -242,7 +270,13 @@ const websiteData = {
               "ETL pipeline for processing large datasets with real-time analytics and reporting",
             year: "2023",
             client: "Data Analytics Company",
-            technologies: ["Python", "Apache Kafka", "PostgreSQL", "Redis", "Docker"],
+            technologies: [
+              "Python",
+              "Apache Kafka",
+              "PostgreSQL",
+              "Redis",
+              "Docker",
+            ],
             githubUrl: "https://github.com/username/data-pipeline",
             images: [
               "/projects/data-pipeline/flow.jpg",
@@ -276,7 +310,12 @@ const websiteData = {
               "Productivity app with task management, reminders, and team collaboration features",
             year: "2024",
             client: "Productivity Startup",
-            technologies: ["React Native", "Redux", "Firebase", "Push Notifications"],
+            technologies: [
+              "React Native",
+              "Redux",
+              "Firebase",
+              "Push Notifications",
+            ],
             appStoreUrl: "https://apps.apple.com/app/id123456",
             playStoreUrl:
               "https://play.google.com/store/apps/details?id=com.taskmanager",
